@@ -1,3 +1,11 @@
+.DS_Store
+*.pyc
+.env
+confusables.json
+categories.json
+db.sqlite3
+.env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -83,8 +91,8 @@ celerybeat-schedule
 .env
 
 # virtualenv
-.venv
-venv/
+.virtual
+virtual/
 ENV/
 
 # Spyder project settings
