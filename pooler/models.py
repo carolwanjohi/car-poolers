@@ -79,6 +79,28 @@ def create_driverprofile(sender, instance, created, **kwargs):
 def save_driverprofile(sender, instance, **kwargs):
     instance.driverprofile.save()
 
+class Passenger(models.Model):
+    '''
+    Class that defines a Passenger in the application
+    '''
+    first_name = models.CharField(max_length=180)
+
+    last_name = models.CharField(max_length=180)
+
+    phone_number = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.first_name  + ' ' + self.last_name
+
+    @classmethod
+    def get_passengers(cls):
+        '''
+        Function that gets all the passengers in the database
+        '''
+        passengers = Passenger.objects.all()
+
+        return passengers
+
 
 
 
