@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Driver, DriverProfile, Passenger
+from .models import Driver, DriverProfile, Passenger, PassengerProfile
 
 # Create your tests here.
 class DriverTestClass(TestCase):
@@ -35,9 +35,9 @@ class DriverProfileTestClass(TestCase):
     '''
     def setUp(self):
         '''
-        Method that creates an instance of Driver class
+        Method that creates an instance of Driver Profile class
         '''
-        # Create instance of D class
+        # Create instance of Drive Profile class
         self.new_driver_profile = DriverProfile(car_capacity=4, car_number_plate="MSA234", car_color="blue")
 
     def test_instance(self):
@@ -82,5 +82,32 @@ class PassengerTestClass(TestCase):
         passengers = Passenger.objects.all()
 
         self.assertTrue( len(gotten_passengers) == len(passengers))
+
+class PassengerProfileTestClass(TestCase):
+    '''
+    Test case for the Passenger Profile class
+    '''
+    def setUp(self):
+        '''
+        Method that creates an instance of Passenger Profile class
+        '''
+        # Create instance of Passenger Profile class
+        self.new_passenger_profile = PassengerProfile(general_location="Nairobi")
+
+    def test_instance(self):
+        '''
+        Test case to check if self.new_passenger_profile in an instance of Passenger class
+        '''
+        self.assertTrue( isinstance(self.new_passenger_profile, PassengerProfile) )
+
+    def test_get_get_passenger_profiles(self):
+        '''
+        Test case to check if all passenger profiles are gotten from the database
+        '''
+        gotten_passenger_profiles = PassengerProfile.get_passenger_profiles()
+
+        passenger_profiles = PassengerProfile.objects.all()
+
+        self.assertTrue( len(gotten_passenger_profiles) == len(passenger_profiles))
 
 

@@ -101,6 +101,42 @@ class Passenger(models.Model):
 
         return passengers
 
+class PassengerProfile(models.Model):
+    '''
+    Class that defines a profile for a Passenger
+    '''
+    passenger = models.OneToOneField(Passenger, on_delete=models.CASCADE)
+
+    profile_pic = models.ImageField(blank=True,upload_to="passenger/profile-pic")
+
+    gender = models.CharField(
+        max_length=30, choices=Gender_Choices, default='None', blank=True)
+
+    general_location = models.CharField(blank=True,max_length=255)
+
+    def __str__(self):
+        return self.passenger.first_name + ' ' + self.passenger.last_name
+
+    @classmethod
+    def get_passenger_profiles(cls):
+        '''
+        Function that gets all the passenger profiles in the database
+        '''
+        passenger_profiles = PassengerProfile.objects.all()
+
+        return passenger_profiles
+
+# Create Passenger Profile when creating a Passenger
+@receiver(post_save, sender=Passenger)
+def create_passengerprofile(sender, instance, created, **kwargs):
+    if created:
+        PassengerProfile.objects.create(passenger=instance)
+
+# Save Passenger Profile when saving a Passenger
+@receiver(post_save, sender=Passenger)
+def save_passengerprofile(sender, instance, **kwargs):
+    instance.passengerprofile.save()
+
 
 
 
