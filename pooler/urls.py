@@ -28,6 +28,12 @@ urlpatterns = [
 
     url( r'^ajax/review-driver/profile/driver/(\d+)/(\d+)', views.review_driver, name="reviewDriver"),
 
+    url( r'^passengers/(\d+)', views.passengers, name="passengers"),
+
+    url( r'^profile/passenger/(\d+)/(\d+)', views.passenger_profile, name="passengerProfile"),
+
+    url( r'^ajax/review-passenger/profile/passenger/(\d+)/(\d+)', views.review_passenger, name="reviewPassenger"),
+
 ]
 
 if settings.DEBUG:

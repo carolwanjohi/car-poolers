@@ -65,62 +65,48 @@
 
     <div class="container">
 
-        <form action="" method="post" enctype="multipart/form-data">
-
-            {% csrf_token %}
+        <div class="row passengerProfilesRow">
             
-            <div class="form-group">
+            {% for passenger_profile in passenger_profiles %}
+
+                <!-- Profile Div -->
+
+                <div class="col-md-10 col-lg-10 well">
+
+                    <a href="{% url 'passengerProfile' driver.id passenger_profile.id%}">
+
+                        {% if passenger_profile.profile_pic%}
+
+                        <img src="{{passenger_profile.profile_pic.url}}" alt="{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}" class="img-responsive profilePicture">
+
+                        {% else %}
+
+                            <img src="{%static 'images/user-icon.png'%}" alt="
+                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}'s Profile Image" class="img-responsive profilePicture">
+
+                        {% endif %}
+
+                        <h6 class="passengerName">
+                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}
+                        </h6>
+                        
+                    </a>
                 
-                {{driver_profile_form.profile_pic.label}}
-                {{driver_profile_form.profile_pic}}
-                {{driver_profile_form.profile_pic.errors}}
+                </div>
 
-            </div>
-            
-            <div class="form-group">
-                
-                {{driver_profile_form.gender.label}}
-                {{driver_profile_form.gender}}
-                {{driver_profile_form.gender.errors}}
+            {% endfor %}
 
-            </div>
-
-            <div class="form-group">
-                
-                {{driver_profile_form.car_image.label}}
-                {{driver_profile_form.car_image}}
-                {{driver_profile_form.car_image.errors}}
-
-            </div>
-            
-            <div class="form-group">
-                
-                {{driver_profile_form.car_number_plate.label}}
-                {{driver_profile_form.car_number_plate}}
-                {{driver_profile_form.car_number_plate.errors}}
-
-            </div>
-            
-            <div class="form-group">
-                
-                {{driver_profile_form.car_capacity.label}}
-                {{driver_profile_form.car_capacity}}
-                {{driver_profile_form.car_capacity.errors}}
-
-            </div>
-            
-            <div class="form-group">
-                
-                {{driver_profile_form.car_color.label}}
-                {{driver_profile_form.car_color}}
-                {{driver_profile_form.car_color.errors}}
-
-            </div>
-
-            <input type="submit" class="btn btn-primary btn-sm" value="Update Profile">
-
-        </form>
+        </div>
 
     </div>
 
 {% endblock %}
+
+
+
+
+
+
+
+
+

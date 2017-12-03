@@ -1,4 +1,4 @@
-{% extends 'all-passengers/base.html' %}
+{% extends 'all-drivers/base.html' %}
 {% load staticfiles%}
 {% load bootstrap3%}
 
@@ -27,19 +27,19 @@
 
                 <div class="navbar-header">
 
-                    <a href="{%url 'passenger' passenger.id%}" class="navbar-brand siteIcon">
+                    <a href="{%url 'driver' driver.id%}" class="navbar-brand siteIcon">
                         <i class="fa fa-car" aria-hidden="true"></i>
                     </a>
 
-                    <a href="{%url 'passenger' passenger.id%}" class="navbar-brand siteName">Car Poolers</a>
+                    <a href="{%url 'driver' driver.id%}" class="navbar-brand siteName">Car Poolers</a>
 
                 </div>
 
                 <div class="navbar-right">
 
-                    <a href="{%url 'drivers' passenger.id%}">
+                    <a href="{%url 'passengers' driver.id%}">
                         <h2>
-                            Drivers
+                            Passengers
                         </h2>
                     </a>
 
@@ -47,7 +47,7 @@
                         <i class="fa fa-compass" aria-hidden="true"></i>
                     </a>
 
-                    <a href="{%url 'passenger' passenger.id%}" class="userIcon">
+                    <a href="{%url 'driver' driver.id%}" class="userIcon">
                         <i class="glyphicon glyphicon-user"></i>
                     </a>
 
@@ -73,25 +73,25 @@
 
                 <div class="panel-heading">
 
-                    {% if driver_profile.profile_pic%}
+                    {% if passenger_profile.profile_pic%}
 
-                        <img src="{{driver_profile.profile_pic.url}}" alt="{{driver_profile.driver.first_name}} {{driver_profile.driver.last_name}}" class="img-responsive profilePicture">
+                        <img src="{{passenger_profile.profile_pic.url}}" alt="{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}" class="img-responsive profilePicture">
 
                     {% else %}
 
-                        <img src="{%static 'images/user-icon.png'%}" alt="{{driver_profile.driver.first_name}} {{driver_profile.driver.last_name}}" class="img-responsive profilePicture">
+                        <img src="{%static 'images/user-icon.png'%}" alt="{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}" class="img-responsive profilePicture">
 
                     {% endif %}
 
                     <h6 class="drivername">
-                        {{driver_profile.driver.first_name}} {{driver_profile.driver.last_name}}
+                        {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}
                     </h6>
 
                 </div>
 
                 <div class="panel-body">
 
-                    <h2>{{driver_profile.driver.first_name}} {{driver_profile.driver.last_name}}'s Reviews</h2>
+                    <h2>{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}'s Reviews</h2>
 
                     <hr>
 
@@ -100,7 +100,7 @@
                         <h5>
 
                             <span class="reviewAuthor">
-                                {{review.passenger.first_name}} {{review.passenger.last_name}}
+                                {{review.driver.first_name}} {{review.driver.last_name}}
                             </span>  
 
                             <span class="reviewContent">
@@ -115,7 +115,7 @@
 
                     <div class="container-fluid">
 
-                        <form action="{% url 'driverProfile' passenger.id driver_profile.id%}" method="post">
+                        <form action="{% url 'passengerProfile' driver.id passenger_profile.id%}" method="post">
 
                             {%csrf_token%}
 
@@ -141,7 +141,10 @@
 
     {{block.super}}
 
-    <script type="text/javascript" src="{%static 'js/driver-review.js'%}"></script>
+    <script type="text/javascript" src="{%static 'js/passenger-review.js'%}"></script>
 
 {% endblock %}
+
+
+
 

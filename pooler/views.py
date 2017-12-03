@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview
-from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile, ReviewDriverForm
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview
+from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile, ReviewDriverForm, ReviewPassengerForm
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -17,6 +17,7 @@ def index(request):
     message = 'Landing Page'
     return render(request,'index.html',{"title":title,"message":message})
 
+# Driver registration and log in
 def new_driver(request):
     '''
     View function to display a registration form when the user selects the driver option
@@ -82,6 +83,7 @@ def driver_login(request):
 
         return render(request, 'registration/driver/login.html',{"title":title,"form":form})
 
+# Drive homepage is Profile page
 @login_required(login_url='/new/driver/')
 def driver(request, id):
     '''
@@ -96,6 +98,7 @@ def driver(request, id):
 
     return render(request, 'all-drivers/profile.html', {"title":title, "driver":driver, "driver_profile":driver_profile})
 
+# Driver update profile
 @login_required(login_url='/new/driver/')
 @transaction.atomic
 def update_driver_profile(request, id):
@@ -144,6 +147,7 @@ def update_driver_profile(request, id):
 
         return render(request, 'all-drivers/update-profile.html', {"title":title,"driver":found_driver,"driver_profile_form":driver_profile_form})
 
+# Passenger registration and log in
 def new_passenger(request):
     '''
     View function to display a registration form when the user selects the passenger option
@@ -209,6 +213,7 @@ def passenger_login(request):
 
         return render(request, 'registration/passenger/login.html',{"title":title,"form":form})
 
+# Passenger homepage is Profile page
 @login_required(login_url='/new/passenger/')
 def passenger(request, id):
     '''
@@ -223,6 +228,7 @@ def passenger(request, id):
 
     return render(request, 'all-passengers/profile.html', {"title":title, "passenger":passenger, "passenger_profile":passenger_profile})
 
+# Passenger update profile 
 @login_required(login_url='/new/passenger/')
 @transaction.atomic
 def update_passenger_profile(request, id):
@@ -269,6 +275,7 @@ def update_passenger_profile(request, id):
 
         return render(request, 'all-passengers/update-profile.html', {"title":title,"passenger":found_passenger,"passenger_profile_form":passenger_profile_form})
 
+# Passenger see list of drivers
 @login_required(login_url='/new/passenger/')
 def drivers(request,id):
     '''
@@ -282,6 +289,7 @@ def drivers(request,id):
 
     return render(request, "all-passengers/reviews.html", {"title":title,"passenger":passenger, "driver_profiles":driver_profiles})
 
+# Passenger see selected driver's profile and reviews
 @login_required(login_url='/new/passenger/')
 def driver_profile(request, passenger_id, driver_profile_id):
     '''
@@ -299,6 +307,7 @@ def driver_profile(request, passenger_id, driver_profile_id):
 
     return render(request, "all-passengers/driver-profile.html", {"title":title, "passenger":passenger, "driver_profile":driver_profile, "reviews":reviews, "form":form})
 
+# Passenger create a driver review
 def review_driver(request, passenger_id, driver_profile_id):
     '''
     Function that saves a driver review without reloading the page
@@ -312,6 +321,57 @@ def review_driver(request, passenger_id, driver_profile_id):
     new_driver_review = DriverReview(passenger=passenger, driver_profile=driver_profile, review_content=review_content )
 
     new_driver_review.save()
+
+    data = {'success':'Your review has successfully been saved'}
+
+    return JsonResponse(data)
+
+# Driver see lis of passengers
+@login_required(login_url='/new/passenger/')
+def passengers(request,id):
+    '''
+    View function to display list of passenger profiles
+    '''
+    driver = Driver.objects.get(id=id)
+
+    title = "Passenger Reviews"
+
+    passenger_profiles = PassengerProfile.objects.all()
+
+    return render(request, "all-drivers/reviews.html", {"title":title,"driver":driver, "passenger_profiles":passenger_profiles})
+
+# Driver see selected passenger's profile and reviews
+@login_required(login_url='/new/passenger/')
+def passenger_profile(request, driver_id, passenger_profile_id):
+    '''
+    View function to display list of driver profiles
+    '''
+    driver = Driver.objects.get(id=driver_id)
+
+    passenger_profile = PassengerProfile.objects.get(id=passenger_profile_id)
+
+    title = f'{passenger_profile.passenger.first_name} {passenger_profile.passenger.last_name}\'s Profile'
+
+    reviews = PassengerReview.get_passenger_reviews(passenger_profile_id)
+
+    form = ReviewPassengerForm()
+
+    return render(request, "all-drivers/passenger-profile.html", {"title":title, "driver":driver, "passenger_profile":passenger_profile, "reviews":reviews, "form":form})
+
+# Driver create a passenger review
+def review_passenger(request, driver_id, passenger_profile_id):
+    '''
+    Function that saves a passenger review without reloading the page
+    '''
+    driver = Driver.objects.get(id=driver_id)
+
+    passenger_profile = PassengerProfile.objects.get(id=passenger_profile_id)
+
+    review_content = request.POST.get('review_content')
+
+    new_passenger_review = PassengerReview(driver=driver, passenger_profile=passenger_profile, review_content=review_content )
+
+    new_passenger_review.save()
 
     data = {'success':'Your review has successfully been saved'}
 
