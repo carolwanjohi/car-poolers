@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview
 
 # Create your tests here.
 class DriverTestClass(TestCase):
@@ -129,7 +129,7 @@ class DriverReviewTestClass(TestCase):
 
     def test_get_driver_reviews(self):
         '''
-        Test case to check if get driver reviews is getting driver reviews for a specific driver
+        Test case to check if get driver reviews is getting driver reviews for a specific driver profile
         '''
         self.james = Driver(first_name="James", last_name="Muriuki", phone_number="0712345656")
         self.james.save()
@@ -147,6 +147,44 @@ class DriverReviewTestClass(TestCase):
 
         # No driver reviews were saved so expect True
         self.assertTrue( len(gotten_driver_reviews) == len(driver_reviews))
+
+class PassengerReviewTestClass(TestCase):
+    '''
+    Test case for the Passenger Review class
+    '''
+    def setUp(self):
+        '''
+        Method that creates an instance of Passenger Review class
+        '''
+        # Create a Passenger Review instance
+        self.new_passenger_review = PassengerReview(review_content ='Python James is Muriuki who wrote Python content for Moringa School')
+
+    def test_instance(self):
+        '''
+        Test case to check if self.new_passenger_review in an instance of Passenger Review class
+        '''
+        self.assertTrue( isinstance(self.new_passenger_review, PassengerReview) )
+
+    def test_get_passenger_reviews(self):
+        '''
+        Test case to check if get passenger reviews is getting passenger reviews for a specific passenger profile
+        '''
+        self.james = Driver(first_name="James", last_name="Muriuki", phone_number="0712345656")
+        self.james.save()
+
+        self.jane = Passenger(first_name="Jane", last_name="Doe", phone_number="0712987987")
+        self.jane.save()
+
+        self.test_passenger_profile = PassengerProfile(passenger=self.jane, general_location="Nairobi")
+
+        self.test_passenger_review = PassengerReview(driver=self.james, passenger_profile=self.test_passenger_profile,review_content="Wow")
+
+        gotten_passenger_reviews = PassengerReview.get_passenger_reviews(self.test_passenger_profile.id)
+
+        passenger_reviews = PassengerReview.objects.all()
+
+        # No passenger reviews were saved so expect True
+        self.assertTrue( len(gotten_passenger_reviews) == len(passenger_reviews))
 
 
 

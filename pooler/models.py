@@ -165,6 +165,34 @@ class DriverReview(models.Model):
 
         return driver_reviews
 
+class PassengerReview(models.Model):
+    '''
+    Class that defines the reviews a driver gives a passenger
+    '''
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+
+    passenger_profile = models.ForeignKey(PassengerProfile, on_delete=models.CASCADE)
+
+    review_content = models.TextField()
+
+    def __str__(self):
+        return self.driver.first_name + ' ' + self.driver.last_name
+
+    @classmethod
+    def get_passenger_reviews(self,passenger_profile_id):
+        '''
+        Function that gets all the reviews a specific passenger's profile gets from drivers
+
+        Args:
+            passenger_profile_id : specific passenger profile id
+
+        Returns:
+            passenger_reviews : Passenger Review objects belonging to a specific passenger profile
+        '''
+        passenger_reviews = PassengerReview.objects.filter(passenger_profile=passenger_profile_id)
+
+        return passenger_reviews
+
 
 
 
