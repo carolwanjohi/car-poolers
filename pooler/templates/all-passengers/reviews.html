@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <link rel="stylesheet" href="{% static 'css/reviews.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -64,62 +64,43 @@
     </nav>
 
     <div class="container">
-    
-        <div class="row passengerRow">
 
-            <!-- Profile Image -->
-            <div class="col md-6 col-lg-6">
-
-                {% if passenger_profile.profile_pic%}
-
-                    <img src="{{passenger_profile.profile_pic.url}}" alt="{{passenger.first_name}} {{passenger.last_name}}" class="img-responsive profilePicture">
-
-                {% else %}
-
-                    <img src="{%static 'images/user-icon.png'%}" alt="{{passenger.first_name}} {{passenger.last_name}} Profile Image" class="img-responsive profilePicture">
-
-                {% endif %}
-
-            </div>
-
-           <!-- Passenger's Info -->
-            <div class="col md-6 col-lg-6">
-
-                <h1>
-                    {{passenger.first_name}} {{passenger.last_name}}
-                </h1>
-
-                <br>
-
-                <h1>
-                    Phone number : +254{{passenger.phone_number}}
-                </h1>
-
-                <br>
-
-                <h1>
-                    Gender : {{passenger_profile.gender}}
-                </h1>
-
-                <br>
-
-                <h1>
-                    General Location : {{passenger_profile.general_location}}
-                </h1>
-
-            </div>
-
-        </div>
-
-
-        <div class="row updateRow">
+        <div class="row driverProfilesRow">
             
-            <h1>
-                <a href="{%url 'updatePassengerProfile' passenger.id%}">Update Profile</a>
-            </h1>
+            {% for driver_profile in driver_profiles %}
+
+                <!-- Profile Div -->
+
+                <div class="col-md-10 col-lg-10 well">
+
+                    <a href="{% url 'driverProfile' passenger.id driver_profile.id%}">
+
+                        {% if driver_profile.profile_pic%}
+
+                        <img src="{{driver_profile.profile_pic.url}}" alt="{{driver_profile.driver.first_name}} {{driver_profile.driver.last_name}}" class="img-responsive profilePicture">
+
+                        {% else %}
+
+                            <img src="{%static 'images/user-icon.png'%}" alt="{{driver.first_name}} {{driver.last_name}} Profile Image" class="img-responsive profilePicture">
+
+                        {% endif %}
+
+                        <h6 class="username">
+                            {{driver_profile.driver.first_name}} {{driver_profile.driver.last_name}}
+                        </h6>
+                        
+                    </a>
+                
+                </div>
+
+            {% endfor %}
 
         </div>
 
     </div>
 
 {% endblock %}
+
+
+
+

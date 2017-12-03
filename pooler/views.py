@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
-from .models import Driver, DriverProfile, Passenger, PassengerProfile
-from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview
+from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile, ReviewDriverForm
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -209,7 +209,6 @@ def passenger_login(request):
 
         return render(request, 'registration/passenger/login.html',{"title":title,"form":form})
 
-
 @login_required(login_url='/new/passenger/')
 def passenger(request, id):
     '''
@@ -269,6 +268,54 @@ def update_passenger_profile(request, id):
         passenger_profile_form = UpdatePassengerProfile(instance=found_passenger.passengerprofile)
 
         return render(request, 'all-passengers/update-profile.html', {"title":title,"passenger":found_passenger,"passenger_profile_form":passenger_profile_form})
+
+@login_required(login_url='/new/passenger/')
+def drivers(request,id):
+    '''
+    View function to display list of driver profiles
+    '''
+    passenger = Passenger.objects.get(id=id)
+
+    title = "Driver Reviews"
+
+    driver_profiles = DriverProfile.objects.all()
+
+    return render(request, "all-passengers/reviews.html", {"title":title,"passenger":passenger, "driver_profiles":driver_profiles})
+
+@login_required(login_url='/new/passenger/')
+def driver_profile(request, passenger_id, driver_profile_id):
+    '''
+    View function to display list of driver profiles
+    '''
+    passenger = Passenger.objects.get(id=passenger_id)
+
+    driver_profile = DriverProfile.objects.get(id=driver_profile_id)
+
+    title = f'{driver_profile.driver.first_name} {driver_profile.driver.last_name}\'s Profile'
+
+    reviews = DriverReview.get_driver_reviews(driver_profile_id)
+
+    form = ReviewDriverForm()
+
+    return render(request, "all-passengers/driver-profile.html", {"title":title, "passenger":passenger, "driver_profile":driver_profile, "reviews":reviews, "form":form})
+
+def review_driver(request, passenger_id, driver_profile_id):
+    '''
+    Function that saves a driver review without reloading the page
+    '''
+    passenger = Passenger.objects.get(id=passenger_id)
+
+    driver_profile = DriverProfile.objects.get(id=driver_profile_id)
+
+    review_content = request.POST.get('review_content')
+
+    new_driver_review = DriverReview(passenger=passenger, driver_profile=driver_profile, review_content=review_content )
+
+    new_driver_review.save()
+
+    data = {'success':'Your review has successfully been saved'}
+
+    return JsonResponse(data)
 
 
 

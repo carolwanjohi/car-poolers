@@ -1,6 +1,6 @@
 from django import forms
 # from django.contrib.auth.forms import AuthenticationForm
-from .models import Driver, DriverProfile, Passenger, PassengerProfile
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview
 
 class NewDriver(forms.ModelForm):
     '''
@@ -49,5 +49,13 @@ class UpdatePassengerProfile(forms.ModelForm):
     class Meta:
         model = PassengerProfile
         fields = ('gender', 'profile_pic', 'general_location')
+
+class ReviewDriverForm(forms.ModelForm):
+    '''
+    Class to create a form for reviewing s driver
+    '''
+    class Meta:
+        model = DriverReview
+        fields = ('review_content',)
 
 

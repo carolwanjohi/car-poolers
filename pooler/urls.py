@@ -21,6 +21,13 @@ urlpatterns = [
     url( r'^login/passenger/', views.passenger_login, name="passengerlogin"),
     
     url( r'^update/passenger/profile/(\d+)', views.update_passenger_profile, name="updatePassengerProfile"),
+
+    url( r'^drivers/(\d+)', views.drivers, name="drivers"),
+
+    url( r'^profile/driver/(\d+)/(\d+)', views.driver_profile, name="driverProfile"),
+
+    url( r'^ajax/review-driver/profile/driver/(\d+)/(\d+)', views.review_driver, name="reviewDriver"),
+
 ]
 
 if settings.DEBUG:
