@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Driver, DriverProfile, Passenger, PassengerProfile
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview
 
 # Create your tests here.
 class DriverTestClass(TestCase):
@@ -109,5 +109,44 @@ class PassengerProfileTestClass(TestCase):
         passenger_profiles = PassengerProfile.objects.all()
 
         self.assertTrue( len(gotten_passenger_profiles) == len(passenger_profiles))
+
+class DriverReviewTestClass(TestCase):
+    '''
+    Test case for the Driver Review class
+    '''
+    def setUp(self):
+        '''
+        Method that creates an instance of Driver Review class
+        '''
+        # Create a Driver Review instance
+        self.new_driver_review = DriverReview(review_content ='Python James is Muriuki who wrote Python content for Moringa School')
+
+    def test_instance(self):
+        '''
+        Test case to check if self.new_driver_review in an instance of Driver Review class
+        '''
+        self.assertTrue( isinstance(self.new_driver_review, DriverReview) )
+
+    def test_get_driver_reviews(self):
+        '''
+        Test case to check if get driver reviews is getting driver reviews for a specific driver
+        '''
+        self.james = Driver(first_name="James", last_name="Muriuki", phone_number="0712345656")
+        self.james.save()
+
+        self.jane = Passenger(first_name="Jane", last_name="Doe", phone_number="0712987987")
+        self.jane.save()
+
+        self.test_driver_profile = DriverProfile(driver=self.james, car_capacity=4, car_number_plate="MSA234", car_color="blue")
+
+        self.test_driver_review = DriverReview(passenger=self.jane, driver_profile=self.test_driver_profile,review_content="Wow")
+
+        gotten_driver_reviews = DriverReview.get_driver_reviews(self.test_driver_profile.id)
+
+        driver_reviews = DriverReview.objects.all()
+
+        # No driver reviews were saved so expect True
+        self.assertTrue( len(gotten_driver_reviews) == len(driver_reviews))
+
 
 
