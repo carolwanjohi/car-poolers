@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     url( r'^$', views.index, name="index"),
     url( r'^new/driver/', views.new_driver, name="newdriver"),
+    url( r'^login/driver/', views.driver_login, name="driverlogin"),
     url( r'driver/(\d+)', views.driver, name="driver"),
 ]
 
