@@ -59,9 +59,96 @@
 
     <div class="container">
 
-        <h1>
-            {{message}}
-        </h1>
+        <div class="row driverRow">
+
+            <!-- Profile Image -->
+            <div class="col md-6 col-lg-6">
+
+                {% if driver_profile.profile_pic%}
+
+                    <img src="{{driver_profile.profile_pic.url}}" alt="{{driver.first_name}} {{driver.last_name}}" class="img-responsive profilePicture">
+
+                {% else %}
+
+                    <img src="" alt="{{driver.first_name}} {{driver.last_name}} Profile Image" class="img-responsive profilePicture">
+
+                {% endif %}
+
+            </div>
+
+           <!-- Driver's Info -->
+            <div class="col md-6 col-lg-6">
+
+                <h1>
+                    {{driver.first_name}} {{driver.last_name}}
+                </h1>
+
+                <br>
+
+                <h1>
+                    Phone number : +254{{driver.phone_number}}
+                </h1>
+
+                <br>
+
+                <h1>
+                    Gender : {{driver_profile.gender}}
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="row carRow">
+
+            <!-- Car Image -->
+            <div class="col-md-6 col-lg-6">
+
+                {% if driver_profile.car_image%}
+
+                    <img src="{{driver_profile.car_image.url}}" alt="{{driver.first_name}} {{driver.last_name}}'s Car"  class="img-responsive carImage">
+
+                {%else%}
+
+                    <img src="" alt="{{driver.first_name}} {{driver.last_name}}'s Car"  class="img-responsive carImage">
+
+                {% endif %}
+                
+            </div>
+            
+            <!-- Car Info -->
+            <div class="col-md-6 col-lg-6">
+
+                <h1>
+                    Number plate : {{driver_profile.car_number_plate}}
+                </h1>
+
+                <br>
+
+                <h1>
+                    Car Color : {{driver_profile.car_color}}
+                </h1>
+
+                <br>
+
+                <h1>
+                    Car Capacity : {{driver_profile.car_capacity}}
+                </h1>
+
+            </div>
+            
+        </div>
+
+        <div class="row updateRow">
+            
+            <h1>
+                <a href="{%url 'updateDriverProfile' driver.id%}">Update Profile</a>
+            </h1>
+
+        </div>
+
+
+
 
     </div>
 

@@ -19,7 +19,7 @@ class DriverLogin(forms.ModelForm):
         model = Driver
         fields = ('phone_number',)
 
-class NewDriverProfile(forms.ModelForm):
+class UpdateDriverProfile(forms.ModelForm):
     '''
     Class to create a form for a driver to change their profile
     '''

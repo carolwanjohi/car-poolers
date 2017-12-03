@@ -14,6 +14,10 @@ Gender_Choices = (
 # Alphanumeric generator
 alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 
+DEFAULTCAR = "car-image/car-default.png"
+
+DEFAULTDRIVERPROFILEPIC = "driver/profile-pic/user-icon.png"
+
 # Create your models here.
 class Driver(models.Model):
     '''
@@ -43,9 +47,9 @@ class DriverProfile(models.Model):
     '''
     driver = models.OneToOneField(Driver, on_delete=models.CASCADE)
 
-    profile_pic = models.ImageField(blank=True,upload_to="driver/profile-pic")
+    profile_pic = models.ImageField(blank=True,upload_to="driver/profile-pic", default=DEFAULTDRIVERPROFILEPIC)
 
-    car_image = models.ImageField(blank=True,upload_to="car-image/")
+    car_image = models.ImageField(blank=True,upload_to="car-image/", default=DEFAULTCAR)
 
     car_capacity = models.PositiveIntegerField(default=0, blank=True)
 
