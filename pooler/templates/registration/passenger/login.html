@@ -9,7 +9,7 @@
         <div class="panel-heading">
 
             <h3 class="text-center">
-                Sign Up 
+                Sign In 
             </h3>
 
         </div>
@@ -22,34 +22,18 @@
 
                 <div class="form-group">
                     
-                    {{form.first_name.label}}
-                    {{form.first_name}}
-                    {{form.first_name.errors}}
-
-                </div>
-
-                <div class="form-group">
-                    
-                    {{form.last_name.label}}
-                    {{form.last_name}}
-                    {{form.last_name.errors}}
-
-                </div>
-
-                <div class="form-group">
-                    
                     {{form.phone_number.label}}
                     {{form.phone_number}}
                     {{form.phone_number.errors}}
 
                 </div>
 
-                <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
+                <input type="submit" class="btn btn-primary btn-sm" value="Sign In">
 
             </form>
 
             <h4>
-                Have an account? <a href="{% url 'passengerlogin'%}">Log in</a>
+                Don't have an account? Register <a href="{%url 'newpassenger'%}">here</a>
             </h4>
             
         </div>

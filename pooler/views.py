@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from .models import Driver, DriverProfile, Passenger, PassengerProfile
-from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger
+from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -67,8 +67,6 @@ def driver_login(request):
 
             try:
                 found_driver = Driver.objects.get(phone_number=phone_number)
-
-                print(found_driver.id)
 
                 return redirect(driver, found_driver.id)
 
@@ -179,6 +177,37 @@ def new_passenger(request):
         form = NewPassenger()
 
         return render(request, 'registration/passenger/registration_form.html', {"title":title, "form":form})
+
+def passenger_login(request):
+    '''
+    View function to display login form for a passenger
+    '''
+    title = "Sign In Passenger"
+
+    if request.method == 'POST':
+
+        form = PassengerLogin(request.POST)
+
+        if form.is_valid:
+
+            phone_number = request.POST.get('phone_number')
+
+            try:
+                found_passenger = Passenger.objects.get(phone_number=phone_number)
+
+                return redirect(passenger, found_passenger.id)
+
+            except ObjectDoesNotExist:
+                raise Http404()
+
+        else:
+
+            messages.error(request, ('Please correct the error below.'))
+
+    else:
+        form = PassengerLogin()
+
+        return render(request, 'registration/passenger/login.html',{"title":title,"form":form})
 
 
 @login_required(login_url='/new/passenger/')

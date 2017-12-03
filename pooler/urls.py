@@ -11,6 +11,7 @@ urlpatterns = [
     url( r'^update/driver/profile/(\d+)', views.update_driver_profile, name="updateDriverProfile"),
     url( r'^new/passenger', views.new_passenger, name="newpassenger"),
     url( r'^passenger/(\d+)', views.passenger, name="passenger"),
+    url( r'^login/passenger/', views.passenger_login, name="passengerlogin"),
 ]
 
 if settings.DEBUG:

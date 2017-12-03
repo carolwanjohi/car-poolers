@@ -34,3 +34,12 @@ class NewPassenger(forms.ModelForm):
         model = Passenger
         fields = ('first_name', 'last_name', 'phone_number')
 
+class PassengerLogin(forms.ModelForm):
+    '''
+    Class to create a form for a user to sign in as a passenger
+    '''
+    class Meta:
+        model = Passenger
+        fields = ('phone_number',)
+
+
