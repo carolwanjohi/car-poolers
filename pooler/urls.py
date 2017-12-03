@@ -5,13 +5,22 @@ from . import views
 
 urlpatterns = [
     url( r'^$', views.index, name="index"),
+
     url( r'^new/driver/', views.new_driver, name="newdriver"),
+
     url( r'^login/driver/', views.driver_login, name="driverlogin"),
+
     url( r'^driver/(\d+)', views.driver, name="driver"),
+
     url( r'^update/driver/profile/(\d+)', views.update_driver_profile, name="updateDriverProfile"),
+
     url( r'^new/passenger', views.new_passenger, name="newpassenger"),
+
     url( r'^passenger/(\d+)', views.passenger, name="passenger"),
+
     url( r'^login/passenger/', views.passenger_login, name="passengerlogin"),
+    
+    url( r'^update/passenger/profile/(\d+)', views.update_passenger_profile, name="updatePassengerProfile"),
 ]
 
 if settings.DEBUG:

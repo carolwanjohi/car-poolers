@@ -42,4 +42,12 @@ class PassengerLogin(forms.ModelForm):
         model = Passenger
         fields = ('phone_number',)
 
+class UpdatePassengerProfile(forms.ModelForm):
+    '''
+    Class to create a form for a passenger to change their profile
+    '''
+    class Meta:
+        model = PassengerProfile
+        fields = ('gender', 'profile_pic', 'general_location')
+
 

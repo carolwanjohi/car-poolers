@@ -95,10 +95,24 @@
                     Gender : {{passenger_profile.gender}}
                 </h1>
 
+                <br>
+
+                <h1>
+                    General Location : {{passenger_profile.general_location}}
+                </h1>
+
             </div>
 
         </div>
 
+
+        <div class="row updateRow">
+            
+            <h1>
+                <a href="{%url 'updatePassengerProfile' passenger.id%}">Update Profile</a>
+            </h1>
+
+        </div>
 
     </div>
 

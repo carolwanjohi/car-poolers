@@ -18,6 +18,8 @@ DEFAULTCAR = "car-image/car-default.png"
 
 DEFAULTDRIVERPROFILEPIC = "driver/profile-pic/user-icon.png"
 
+DEFAULTPASSANGERPROFILEPIC = "passenger/profile-pic/user-icon.png"
+
 # Create your models here.
 class Driver(models.Model):
     '''
@@ -111,7 +113,7 @@ class PassengerProfile(models.Model):
     '''
     passenger = models.OneToOneField(Passenger, on_delete=models.CASCADE)
 
-    profile_pic = models.ImageField(blank=True,upload_to="passenger/profile-pic")
+    profile_pic = models.ImageField(blank=True, upload_to="passenger/profile-pic", default=DEFAULTPASSANGERPROFILEPIC)
 
     gender = models.CharField(
         max_length=30, choices=Gender_Choices, default='None', blank=True)

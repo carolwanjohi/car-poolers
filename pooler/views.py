@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from .models import Driver, DriverProfile, Passenger, PassengerProfile
-from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin
+from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -109,13 +109,13 @@ def update_driver_profile(request, id):
 
     if request.method == 'POST':
 
-        driver_form = NewDriver(request.POST)
+        # driver_form = NewDriver(request.POST)
 
         driver_profile_form = UpdateDriverProfile(request.POST, instance=found_driver.driverprofile,files=request.FILES)
 
-        if driver_form.is_valid() and driver_profile_form.is_valid():
+        if  driver_profile_form.is_valid():
 
-            driver_details = driver_form.save(commit=False)
+            # driver_details = driver_form.save(commit=False)
 
             driver_profile = driver_profile_form.save(commit=False)
 
@@ -127,7 +127,7 @@ def update_driver_profile(request, id):
 
             driver_profile.save()
 
-            driver_details.save()
+            # driver_details.save()
 
 
             return redirect(driver, found_driver.id)
@@ -138,11 +138,11 @@ def update_driver_profile(request, id):
 
     else:
 
-        driver_form = NewDriver(instance=found_driver)
+        # driver_form = NewDriver(instance=found_driver)
 
         driver_profile_form = UpdateDriverProfile(instance=found_driver.driverprofile)
 
-        return render(request, 'all-drivers/update-profile.html', {"title":title,"driver":found_driver, "driver_form":driver_form,"driver_profile_form":driver_profile_form})
+        return render(request, 'all-drivers/update-profile.html', {"title":title,"driver":found_driver,"driver_profile_form":driver_profile_form})
 
 def new_passenger(request):
     '''
@@ -223,6 +223,52 @@ def passenger(request, id):
     passenger_profile = PassengerProfile.objects.get(passenger=passenger)
 
     return render(request, 'all-passengers/profile.html', {"title":title, "passenger":passenger, "passenger_profile":passenger_profile})
+
+@login_required(login_url='/new/passenger/')
+@transaction.atomic
+def update_passenger_profile(request, id):
+    '''
+    View function to display an update passenger profile form for an authenticated passenger
+    '''
+
+    found_passenger = Passenger.objects.get(id=id)
+
+    title = f'Update Profile'
+
+    if request.method == 'POST':
+
+        # passenger_form = NewPassenger(request.POST)
+
+        passenger_profile_form = UpdatePassengerProfile(request.POST, instance=found_passenger.passengerprofile,files=request.FILES)
+
+        if passenger_profile_form.is_valid():
+
+            # passenger_details = passenger_form.save(commit=False)
+
+            passenger_profile = passenger_profile_form.save(commit=False)
+
+            passenger_profile.passenger = found_passenger
+
+            passenger_profile.profile_pic = passenger_profile_form.cleaned_data['profile_pic']
+
+            passenger_profile.save()
+
+            # passenger_details.save()
+
+
+            return redirect(passenger, found_passenger.id)
+
+        else:
+
+            messages.error(request, ('Please correct the error below.'))
+
+    else:
+
+        # passenger_form = NewPassenger(instance=found_passenger)
+
+        passenger_profile_form = UpdatePassengerProfile(instance=found_passenger.passengerprofile)
+
+        return render(request, 'all-passengers/update-profile.html', {"title":title,"passenger":found_passenger,"passenger_profile_form":passenger_profile_form})
 
 
 
