@@ -9,6 +9,8 @@ urlpatterns = [
     url( r'^login/driver/', views.driver_login, name="driverlogin"),
     url( r'^driver/(\d+)', views.driver, name="driver"),
     url( r'^update/driver/profile/(\d+)', views.update_driver_profile, name="updateDriverProfile"),
+    url( r'^new/passenger', views.new_passenger, name="newpassenger"),
+    url( r'^passenger/(\d+)', views.passenger, name="passenger"),
 ]
 
 if settings.DEBUG:

@@ -1,7 +1,6 @@
 from django import forms
 # from django.contrib.auth.forms import AuthenticationForm
-from .models import Driver, DriverProfile
-
+from .models import Driver, DriverProfile, Passenger, PassengerProfile
 
 class NewDriver(forms.ModelForm):
     '''
@@ -26,3 +25,12 @@ class UpdateDriverProfile(forms.ModelForm):
     class Meta:
         model = DriverProfile
         fields = ('gender', 'profile_pic', 'car_image', 'car_capacity', 'car_number_plate', 'car_color')
+
+class NewPassenger(forms.ModelForm):
+    '''
+    Class to create a form for a user to sign up as a driver
+    '''
+    class Meta:
+        model = Passenger
+        fields = ('first_name', 'last_name', 'phone_number')
+

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
-from .models import Driver, DriverProfile
-from .forms import NewDriver, UpdateDriverProfile, DriverLogin
+from .models import Driver, DriverProfile, Passenger, PassengerProfile
+from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -146,7 +146,54 @@ def update_driver_profile(request, id):
 
         return render(request, 'all-drivers/update-profile.html', {"title":title,"driver":found_driver, "driver_form":driver_form,"driver_profile_form":driver_profile_form})
 
+def new_passenger(request):
+    '''
+    View function to display a registration form when the user selects the passenger option
+    '''
+    title = 'Sign Up Passenger'
 
+    if request.method == 'POST':
+
+        form = NewPassenger(request.POST)
+
+        if form.is_valid:
+
+            first_name = request.POST.get('first_name')
+
+            last_name = request.POST.get('last_name')
+
+            phone_number = request.POST.get('phone_number')
+
+            new_passenger = Passenger(first_name=first_name, last_name=last_name, phone_number=phone_number)
+
+            new_passenger.save()
+
+            return redirect(passenger, new_passenger.id)
+
+        else:
+
+            messages.error(request, ('Please correct the error below.'))
+
+    else:
+
+        form = NewPassenger()
+
+        return render(request, 'registration/passenger/registration_form.html', {"title":title, "form":form})
+
+
+@login_required(login_url='/new/passenger/')
+def passenger(request, id):
+    '''
+    View function to display an authenticated logged in passenger's profile
+    '''
+
+    passenger = Passenger.objects.get(id=id)
+
+    title = f'{passenger.first_name} {passenger.last_name}'
+
+    passenger_profile = PassengerProfile.objects.get(passenger=passenger)
+
+    return render(request, 'all-passengers/profile.html', {"title":title, "passenger":passenger, "passenger_profile":passenger_profile})
 
 
 
