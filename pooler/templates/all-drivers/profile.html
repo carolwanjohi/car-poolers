@@ -1,0 +1,66 @@
+{% extends 'all-drivers/base.html' %}
+{% load staticfiles%}
+{% load bootstrap3%}
+
+<!-- Styles block -->
+{% block styles %}
+
+    {{block.super}}
+    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <script src="https://use.fontawesome.com/80caa23151.js"></script>
+
+
+{% endblock %}
+
+<!-- Content block -->
+{% block content %}
+
+    {{block.super}}
+
+    <nav class="navbar navbar-inverse">
+
+        <div class="container-fluid">
+
+            <div class="container"> 
+
+                <div class="navbar-header">
+
+                    <a href="{%url 'driver' driver.id%}" class="navbar-brand siteIcon">
+                        <i class="fa fa-car" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="{%url 'driver' driver.id%}" class="navbar-brand siteName">Car Poolers</a>
+
+                </div>
+
+                <div class="navbar-right">
+
+                    <a href="#" class="exploreIcon">
+                        <i class="fa fa-compass" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="{%url 'driver' driver.id%}" class="userIcon">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </a>
+
+                    <a href="{%url 'index'%}" class="signOut">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <div class="container">
+
+        <h1>
+            {{message}}
+        </h1>
+
+    </div>
+
+{% endblock %}

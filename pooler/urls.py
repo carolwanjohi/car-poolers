@@ -5,7 +5,8 @@ from . import views
 
 urlpatterns = [
     url( r'^$', views.index, name="index"),
-    url( r'^driver/', views.driver, name="driver"),
+    url( r'^new/driver/', views.new_driver, name="newdriver"),
+    url( r'driver/(\d+)', views.driver, name="driver"),
 ]
 
 if settings.DEBUG:
