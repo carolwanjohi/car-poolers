@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan
 
 # Create your tests here.
 class DriverTestClass(TestCase):
@@ -186,5 +186,47 @@ class PassengerReviewTestClass(TestCase):
         # No passenger reviews were saved so expect True
         self.assertTrue( len(gotten_passenger_reviews) == len(passenger_reviews))
 
+
+class TravelPlanTestClass(TestCase):
+    '''
+    Test case for Travel Plan class
+    '''
+
+    # Set Up method
+    def setUp(self):
+        '''
+        Method that sets up a Travel Plan instance before each test
+        '''
+        # Create a Travel Plan instance
+        self.new_travel_plan = TravelPlan(current_location='Karen', destination='Thika')
+
+    def test_instance(self):
+        '''
+        Test case to check if self.new_travel_plan is an instance of TravelPlan class
+        '''
+        self.assertTrue( isinstance(self.new_travel_plan, TravelPlan) )
+
+    def test_get_driver_near_me(self):
+        '''
+        Test case to check if get driver near me gets Travel Plan objects that contain the general location of a passenger
+        '''
+        self.james = Driver(first_name="James", last_name="Muriuki", phone_number="0712345656")
+        self.james.save()
+
+        self.jane = Passenger(first_name="Jane", last_name="Doe", phone_number="0712987987")
+        self.jane.save()
+
+        self.test_driver_profile = DriverProfile(driver=self.james, car_capacity=4, car_number_plate="MSA234", car_color="blue")
+
+        self.test_passenger_profile = PassengerProfile(passenger=self.jane, general_location="Kasarani")
+
+        self.test_travel_plan = TravelPlan(driver_profile=self.test_driver_profile ,current_location='Kasarani', destination='Karen')
+
+        gotten_close_drivers = TravelPlan.get_driver_near_me(self.test_passenger_profile.general_location)
+
+        travel_plans = TravelPlan.objects.all()
+
+        # No travel plans were saved so expect True
+        self.assertTrue( len(gotten_close_drivers) == len(travel_plans))
 
 

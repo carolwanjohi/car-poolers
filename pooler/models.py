@@ -199,6 +199,35 @@ class PassengerReview(models.Model):
 
         return passenger_reviews
 
+class TravelPlan(models.Model):
+    '''
+    Class that defines the current location and the destination of the driver
+    '''
+    driver_profile = models.ForeignKey(DriverProfile, on_delete=models.CASCADE)
+
+    current_location = models.CharField(max_length=255)
+
+    destination = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.driver_profile.driver.first_name + ' ' + self.driver_profile.driver.last_name
+
+    @classmethod
+    def get_driver_near_me(cls,passenger_general_location):
+        '''
+        Function that gets Travel Plan objects that have a current location matching the general location of a passenger
+
+        Args:
+            passenger_general_location : the general_location of a passenger
+
+        Returns:
+            close_drivers : list of Travel Plan objects with current location that match the passenger general location
+        '''
+        close_drivers = TravelPlan.objects.filter(current_location__icontains=passenger_general_location)
+
+        return close_drivers
+
+
 
 
 
