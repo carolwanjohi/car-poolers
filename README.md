@@ -4,10 +4,8 @@
 
 ## By **[Carol Wanjohi](https://github.com/carolwanjohi)**
 
-our Task is to create an application that allows users to share a ride from one place to another. As a user, I would like to log on to the website, find a driver near me with space in his/her car going the same direction as me and book a space.
-
 ## Description
-[This]() is an application that allows users to share a ride from one place to another. Users can log into the site, find a driver near them with space in his/her car heading to the same direction as the user and book a space.
+[This](https://car-poolers.herokuapp.com/) is an application that allows users to share a ride from one place to another. Users can log into the site, find a driver near them with space in his/her car heading to the same direction as the user and book a space.
 
 ## User Stories
 As a user I would like to:
@@ -39,6 +37,7 @@ As a driver I would to:
 ### Prerequisites
 * Python 3.6.2
 * Virtual environment
+* Internet
 
 ### Installation Process
 1. Copy repolink
