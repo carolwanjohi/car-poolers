@@ -34,6 +34,8 @@ urlpatterns = [
 
     url( r'^ajax/review-passenger/profile/passenger/(\d+)/(\d+)', views.review_passenger, name="reviewPassenger"),
 
+    url( r'^driver-near-me/(\d+)', views.driver_near_me, name="driverNearMe"),
+
 ]
 
 if settings.DEBUG:

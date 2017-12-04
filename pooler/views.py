@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan
 from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile, ReviewDriverForm, ReviewPassengerForm
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -376,6 +376,36 @@ def review_passenger(request, driver_id, passenger_profile_id):
     data = {'success':'Your review has successfully been saved'}
 
     return JsonResponse(data)
+
+# Passenger see drivers near them
+@login_required(login_url='/new/passenger')
+def driver_near_me(request, passenger_id):
+    '''
+    View function that displays a list of drivers near the general location of the current passenger
+    '''
+    passenger = Passenger.objects.get(id=passenger_id)
+
+    passenger_profile = PassengerProfile.objects.get(passenger=passenger_id)
+
+    title = f'Drivers near {passenger_profile.passenger.first_name} {passenger_profile.passenger.last_name}'
+
+    passenger_general_location = passenger_profile.general_location
+
+    travel_plans = TravelPlan.objects.all()
+
+    close_drivers = TravelPlan.get_driver_near_me(passenger_general_location)
+
+    if len(close_drivers) == 0:
+
+        message = f'{passenger_general_location}'
+
+        return render(request, 'all-passengers/driver-near-me.html', {"title":title, "message":message, "passenger":passenger})
+    else:
+        print(close_drivers)
+
+        return render(request, 'all-passengers/driver-near-me.html', {"title":title, "close_drivers":close_drivers, "passenger": passenger})
+
+    return print(len(close_drivers))
 
 
 
