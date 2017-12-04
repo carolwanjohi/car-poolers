@@ -46,8 +46,8 @@ As a driver I would to:
 3. Write `cd car-poolers`
 4. Create a virtual environment with `virtualenv virtual` or try `python3.6 -m venv virtual`
 5. Create .env file `touch .env` and add the following:
-`SECRET_KEY=<your secret key>`
-`DEBUG=True`
+* `SECRET_KEY=<your secret key>`
+* `DEBUG=True`
 6. Enter your virtual environment `source virtual/bin/activate`
 7. Run `pip install -r requirements.txt` or `pip3 install -r requirements.txt`
 8. Run `./manage.py runserver` or `python3.6 manage.py runserver` to run the application
