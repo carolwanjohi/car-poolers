@@ -1,8 +1,15 @@
 {% extends 'registration/base.html' %}
 {% load bootstrap3 %}
+{% load staticfiles %}
+
+<!-- Styles block -->
+{% block styles %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/registration-form.css'%}">
+
+{% endblock %}
 
 {% block content %}
-
 
     <div class="panel panel-default">
         

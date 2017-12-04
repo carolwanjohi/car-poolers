@@ -1,0 +1,21 @@
+/*Style registration form for driver and passenger*/
+div.row{
+    margin-top: 4.5em;
+}
+
+.panel-default>.panel-heading {
+    background-color: #06BEE1;
+}
+
+.panel-body {
+    padding-left: 19em;
+}
+
+div.panel-body > h4 > a {
+    color: #2541B2;
+}
+
+div.panel-body > h4 > a:hover {
+    color: #06BEE1;
+    text-decoration: none;
+}
