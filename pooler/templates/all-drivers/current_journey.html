@@ -70,35 +70,33 @@
     </nav>
 
     <div class="container">
+        
+        <div class="row travelPlans">
 
-        <div class="row passengerProfilesRow">
-            
-            {% for passenger_profile in passenger_profiles %}
+            {% for travel_plan in travel_plans %}
+                <h2>
+                    Travel Date : {{travel_plan.travel_date}}
+                </h2>
 
-                <!-- Profile Div -->
+                <br>
 
-                <div class="col-md-10 col-lg-10 well">
+                <h2>
+                    Current Location : {{travel_plan.current_location}}
+                </h2>
 
-                    <a href="{% url 'passengerProfile' driver.id passenger_profile.id%}">
+                <br>
 
-                        {% if passenger_profile.profile_pic%}
+                <h2>
+                    Destination : {{travel_plan.destination}}
+                </h2>
 
-                        <img src="{{passenger_profile.profile_pic.url}}" alt="{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}" class="img-responsive profilePicture">
+                <br>
 
-                        {% else %}
+                <h2>
+                    Space Left : {{travel_plan.driver_profile.car_capacity}}
+                </h2>
 
-                            <img src="{%static 'images/user-icon.png'%}" alt="
-                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}'s Profile Image" class="img-responsive profilePicture">
-
-                        {% endif %}
-
-                        <h6 class="passengerName">
-                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}
-                        </h6>
-                        
-                    </a>
-                
-                </div>
+                <hr>
 
             {% endfor %}
 
@@ -107,12 +105,4 @@
     </div>
 
 {% endblock %}
-
-
-
-
-
-
-
-
 

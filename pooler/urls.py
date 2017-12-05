@@ -36,6 +36,10 @@ urlpatterns = [
 
     url( r'^driver-near-me/(\d+)', views.driver_near_me, name="driverNearMe"),
 
+    url( r'^new/journey/(\d+)', views.new_journey, name="newJourney"),
+
+    url( r'^my-journies/(\d+)', views.current_journey, name="currentJourney")
+
 ]
 
 if settings.DEBUG:

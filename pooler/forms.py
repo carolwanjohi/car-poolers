@@ -1,6 +1,6 @@
 from django import forms
 # from django.contrib.auth.forms import AuthenticationForm
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan
 
 class NewDriver(forms.ModelForm):
     '''
@@ -52,7 +52,7 @@ class UpdatePassengerProfile(forms.ModelForm):
 
 class ReviewDriverForm(forms.ModelForm):
     '''
-    Class to create a form for reviewing s driver
+    Class to create a form for reviewing a driver
     '''
     class Meta:
         model = DriverReview
@@ -60,10 +60,19 @@ class ReviewDriverForm(forms.ModelForm):
 
 class ReviewPassengerForm(forms.ModelForm):
     '''
-    Class to create a form for reviewing s driver
+    Class to create a form for reviewing a passenger
     '''
     class Meta:
         model = PassengerReview
         fields = ('review_content',)
+
+class NewTravelPlan(forms.ModelForm):
+    '''
+    Class to create a form for creating a new travel plan
+    '''
+    class Meta:
+        model = TravelPlan
+        exclude = ['driver_profile','travel_date']
+        fields = ('current_location', 'destination')
 
 

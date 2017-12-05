@@ -107,7 +107,23 @@
                         {% endif %}
 
                         <h6 class="username">
-                            {{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}}
+
+                            <h2>
+                                {{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}}
+                            </h2>
+
+                            <h2>
+                                Destination : {{close_driver.destination}}
+                            </h2>
+
+                            <h2>
+                                Travel Time : {{close_driver.travel_date}}
+                            </h2>
+
+                            <h2>
+                                Space Left : {{close_driver.driver_profile.car_capacity}}
+                            </h2>
+
                         </h6>
                         
                     </a>
@@ -117,6 +133,7 @@
             {% endfor %}
 
         </div>
+        
         {% endif %}
 
     </div>

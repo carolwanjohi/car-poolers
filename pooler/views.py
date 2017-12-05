@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan
-from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile, ReviewDriverForm, ReviewPassengerForm
+from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile, ReviewDriverForm, ReviewPassengerForm, NewTravelPlan
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -326,8 +326,8 @@ def review_driver(request, passenger_id, driver_profile_id):
 
     return JsonResponse(data)
 
-# Driver see lis of passengers
-@login_required(login_url='/new/passenger/')
+# Driver sees list of passengers
+@login_required(login_url='/new/driver/')
 def passengers(request,id):
     '''
     View function to display list of passenger profiles
@@ -341,7 +341,7 @@ def passengers(request,id):
     return render(request, "all-drivers/reviews.html", {"title":title,"driver":driver, "passenger_profiles":passenger_profiles})
 
 # Driver see selected passenger's profile and reviews
-@login_required(login_url='/new/passenger/')
+@login_required(login_url='/new/driver/')
 def passenger_profile(request, driver_id, passenger_profile_id):
     '''
     View function to display list of driver profiles
@@ -406,6 +406,59 @@ def driver_near_me(request, passenger_id):
         return render(request, 'all-passengers/driver-near-me.html', {"title":title, "close_drivers":close_drivers, "passenger": passenger})
 
     return print(len(close_drivers))
+
+# Driver begins a new journey
+@login_required(login_url='/new/driver/')
+def new_journey(request, driver_profile_id):
+    '''
+    View function to display a form for creating a new travel plan 
+    '''
+    title = "New Journey"
+
+    driver_profile = DriverProfile.objects.get(id=driver_profile_id)
+
+    found_driver = driver_profile.driver
+
+    if request.method == 'POST':
+
+        form = NewTravelPlan(request.POST)
+
+        if form.is_valid:
+
+            new_travel_plan = form.save(commit=False)
+
+            new_travel_plan.driver_profile = driver_profile
+
+            new_travel_plan.save()
+
+            return redirect(current_journey, found_driver.id)
+
+        else :
+
+            messages.error(request, ('Please correct the error below.'))
+
+    else : 
+
+        form = NewTravelPlan()
+
+        return render(request, 'all-drivers/new-journey.html', {"title": title, "form": form, "driver":found_driver})
+
+
+@login_required(login_url='/new/driver/')
+def current_journey(request,driver_id):
+    '''
+    View function to display a driver's travel plans
+    '''
+    driver = Driver.objects.get(id=driver_id)
+
+    driver_profile = driver.driverprofile
+
+    travel_plans = TravelPlan.objects.filter(driver_profile=driver_profile)
+
+    title = f'{driver.first_name} {driver.last_name}\'s Journeys'
+
+    return render(request, 'all-drivers/current_journey.html', {"title":title, "driver":driver, "travel_plans":travel_plans, "driver_profile":driver_profile})
+
 
 
 

@@ -35,17 +35,23 @@
 
                 </div>
 
-                <div class="navbar-right">
+                <div class="navbar-center">
+
+                    <a href="{%url 'newJourney' driver.driverprofile.id%}">
+                        <h2>
+                            New Journey
+                        </h2>
+                    </a>
 
                     <a href="{%url 'passengers' driver.id%}">
                         <h2>
                             Passengers
                         </h2>
                     </a>
+                    
+                </div>
 
-                    <a href="#" class="exploreIcon">
-                        <i class="fa fa-compass" aria-hidden="true"></i>
-                    </a>
+                <div class="navbar-right">
 
                     <a href="{%url 'driver' driver.id%}" class="userIcon">
                         <i class="glyphicon glyphicon-user"></i>
@@ -146,10 +152,29 @@
         </div>
 
         <div class="row updateRow">
+
+            <!-- Update Profile -->
+            <div class="col-md-4 col-lg-4">
             
-            <h1>
-                <a href="{%url 'updateDriverProfile' driver.id%}">Update Profile</a>
-            </h1>
+                <h1>
+                    <a href="{%url 'updateDriverProfile' driver.id%}">Update Profile</a>
+                </h1>
+                
+            </div>
+
+            <!-- Empty div -->
+            <div class="col-md-4 col-lg-4">
+                
+            </div>
+
+            <!-- Start New Journey -->
+            <div class="col-md-4 col-lg-4">
+                
+                <h1>
+                    <a href="{%url 'newJourney' driver_profile.id%}">New Journey</a>
+                </h1>
+
+            </div>
 
         </div>
 

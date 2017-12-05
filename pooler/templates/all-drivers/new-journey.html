@@ -70,44 +70,34 @@
     </nav>
 
     <div class="container">
+        
+        <form action="" method="post" enctype="multipart/form-data">
 
-        <div class="row passengerProfilesRow">
+            {% csrf_token %}
             
-            {% for passenger_profile in passenger_profiles %}
+            <div class="form-group">
 
-                <!-- Profile Div -->
+                {{form.current_location.label}}
+                {{form.current_location}}
+                {{form.current_location.errors}}
 
-                <div class="col-md-10 col-lg-10 well">
+            </div>
+            
+            <div class="form-group">
 
-                    <a href="{% url 'passengerProfile' driver.id passenger_profile.id%}">
-
-                        {% if passenger_profile.profile_pic%}
-
-                        <img src="{{passenger_profile.profile_pic.url}}" alt="{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}" class="img-responsive profilePicture">
-
-                        {% else %}
-
-                            <img src="{%static 'images/user-icon.png'%}" alt="
-                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}'s Profile Image" class="img-responsive profilePicture">
-
-                        {% endif %}
-
-                        <h6 class="passengerName">
-                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}
-                        </h6>
-                        
-                    </a>
+                {{form.destination.label}}
+                {{form.destination}}
+                {{form.destination.errors}}
                 
-                </div>
+            </div>
 
-            {% endfor %}
-
-        </div>
+            <input type="submit" class="btn btn-primary btn-sm" value="Create Journey">
+            
+        </form>
 
     </div>
 
 {% endblock %}
-
 
 
 
