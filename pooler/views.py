@@ -38,10 +38,22 @@ def new_driver(request):
 
             new_driver = Driver(first_name=first_name, last_name=last_name, phone_number=phone_number)
 
-            new_driver.save()
+            drivers = Driver.objects.all()
 
-            return redirect(driver, new_driver.id)
+            for existing_driver in drivers:
 
+                if new_driver.phone_number != existing_driver.phone_number:
+                    message = 'The number is already registered'
+
+                    messages.error(request, ('This number is already registered'))
+
+                    return render(request, 'registration/driver/registration_form.html', {"title":title, "form":form, "message":message})
+
+                else:
+                    new_driver.save()
+
+                    return redirect(driver, new_driver.id)
+                
         else:
 
             messages.error(request, ('Please correct the error below.'))
@@ -58,94 +70,122 @@ def driver_login(request):
     '''
     title = "Sign In Driver"
 
-    if request.method == 'POST':
+    try:
 
-        form = DriverLogin(request.POST)
+        if request.method == 'POST':
 
-        if form.is_valid:
+            form = DriverLogin(request.POST)
 
-            phone_number = request.POST.get('phone_number')
+            if form.is_valid:
 
-            try:
-                found_driver = Driver.objects.get(phone_number=phone_number)
+                phone_number = request.POST.get('phone_number')
 
-                return redirect(driver, found_driver.id)
+                try:
+                    found_driver = Driver.objects.get(phone_number=phone_number)
 
-            except ObjectDoesNotExist:
-                raise Http404()
+                    print(found_driver)
+
+                    return redirect(driver, found_driver.id)
+
+                except ObjectDoesNotExist:
+                    raise Http404()
+
+            else:
+
+                messages.error(request, ('Please correct the error below.'))
 
         else:
+            form = DriverLogin()
 
-            messages.error(request, ('Please correct the error below.'))
+            return render(request, 'registration/driver/login.html',{"title":title,"form":form})
 
-    else:
-        form = DriverLogin()
-
-        return render(request, 'registration/driver/login.html',{"title":title,"form":form})
+    except ObjectDoesNotExist:
+        raise Http404()
 
 # Drive homepage is Profile page
-@login_required(login_url='/new/driver/')
 def driver(request, id):
     '''
     View function to display an authenticated logged in driver's profile
     '''
+    drivers = Driver.objects.all()
 
-    driver = Driver.objects.get(id=id)
+    try:
 
-    title = f'{driver.first_name} {driver.last_name}'
+        driver = Driver.objects.get(id=id)
 
-    driver_profile = DriverProfile.objects.get(driver=driver)
+        if driver in drivers:
 
-    return render(request, 'all-drivers/profile.html', {"title":title, "driver":driver, "driver_profile":driver_profile})
+            title = f'{driver.first_name} {driver.last_name}'
+
+            driver_profile = DriverProfile.objects.get(driver=driver)
+
+            return render(request, 'all-drivers/profile.html', {"title":title, "driver":driver, "driver_profile":driver_profile})
+
+        else:
+            return redirect(driver_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
 
 # Driver update profile
-@login_required(login_url='/new/driver/')
 @transaction.atomic
 def update_driver_profile(request, id):
     '''
     View function to display an update driver profile form for an authenticated driver
     '''
+    drivers = Driver.objects.all()
 
-    found_driver = Driver.objects.get(id=id)
+    try:
 
-    title = f'Update Profile'
+        found_driver = Driver.objects.get(id=id)
 
-    if request.method == 'POST':
+        if found_driver in drivers:
 
-        # driver_form = NewDriver(request.POST)
+            title = f'Update Profile'
 
-        driver_profile_form = UpdateDriverProfile(request.POST, instance=found_driver.driverprofile,files=request.FILES)
+            if request.method == 'POST':
 
-        if  driver_profile_form.is_valid():
+                # driver_form = NewDriver(request.POST)
 
-            # driver_details = driver_form.save(commit=False)
+                driver_profile_form = UpdateDriverProfile(request.POST, instance=found_driver.driverprofile,files=request.FILES)
 
-            driver_profile = driver_profile_form.save(commit=False)
+                if  driver_profile_form.is_valid():
 
-            driver_profile.driver = found_driver
+                    # driver_details = driver_form.save(commit=False)
 
-            driver_profile.profile_pic = driver_profile_form.cleaned_data['profile_pic']
+                    driver_profile = driver_profile_form.save(commit=False)
 
-            driver_profile.car_image = driver_profile_form.cleaned_data['car_image']
+                    driver_profile.driver = found_driver
 
-            driver_profile.save()
+                    driver_profile.profile_pic = driver_profile_form.cleaned_data['profile_pic']
 
-            # driver_details.save()
+                    driver_profile.car_image = driver_profile_form.cleaned_data['car_image']
+
+                    driver_profile.save()
+
+                    # driver_details.save()
 
 
-            return redirect(driver, found_driver.id)
+                    return redirect(driver, found_driver.id)
+
+                else:
+
+                    messages.error(request, ('Please correct the error below.'))
+
+            else:
+
+                # driver_form = NewDriver(instance=found_driver)
+
+                driver_profile_form = UpdateDriverProfile(instance=found_driver.driverprofile)
+
+                return render(request, 'all-drivers/update-profile.html', {"title":title,"driver":found_driver,"driver_profile_form":driver_profile_form})
 
         else:
 
-            messages.error(request, ('Please correct the error below.'))
+            return redirect(driver_login)
 
-    else:
-
-        # driver_form = NewDriver(instance=found_driver)
-
-        driver_profile_form = UpdateDriverProfile(instance=found_driver.driverprofile)
-
-        return render(request, 'all-drivers/update-profile.html', {"title":title,"driver":found_driver,"driver_profile_form":driver_profile_form})
+    except ObjectDoesNotExist:
+        raise Http404()
 
 # Passenger registration and log in
 def new_passenger(request):
@@ -168,9 +208,21 @@ def new_passenger(request):
 
             new_passenger = Passenger(first_name=first_name, last_name=last_name, phone_number=phone_number)
 
-            new_passenger.save()
+            passengers = Passenger.objects.all()
 
-            return redirect(passenger, new_passenger.id)
+            for existing_passenger in passengers:
+
+                if new_passenger.phone_number != existing_passenger.phone_number:
+                    message = 'The number is already registered'
+
+                    messages.error(request, ('This number is already registered'))
+
+                    return render(request, 'registration/passenger/registration_form.html', {"title":title, "form":form, "message":message})
+
+                else:
+                    new_passenger.save()
+
+                    return redirect(passenger, new_passenger.id)
 
         else:
 
@@ -214,98 +266,144 @@ def passenger_login(request):
         return render(request, 'registration/passenger/login.html',{"title":title,"form":form})
 
 # Passenger homepage is Profile page
-@login_required(login_url='/new/passenger/')
 def passenger(request, id):
     '''
     View function to display an authenticated logged in passenger's profile
     '''
+    passengers = Passenger.objects.all()
 
-    passenger = Passenger.objects.get(id=id)
+    try:
 
-    title = f'{passenger.first_name} {passenger.last_name}'
+        passenger = Passenger.objects.get(id=id)
 
-    passenger_profile = PassengerProfile.objects.get(passenger=passenger)
+        if passenger in passengers :
 
-    return render(request, 'all-passengers/profile.html', {"title":title, "passenger":passenger, "passenger_profile":passenger_profile})
+            title = f'{passenger.first_name} {passenger.last_name}'
+
+            passenger_profile = PassengerProfile.objects.get(passenger=passenger)
+
+            return render(request, 'all-passengers/profile.html', {"title":title, "passenger":passenger, "passenger_profile":passenger_profile})
+
+        else :
+            return redirect(passenger_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
+
 
 # Passenger update profile 
-@login_required(login_url='/new/passenger/')
 @transaction.atomic
 def update_passenger_profile(request, id):
     '''
     View function to display an update passenger profile form for an authenticated passenger
     '''
+    passengers = Passenger.objects.all()
 
-    found_passenger = Passenger.objects.get(id=id)
+    try:
 
-    title = f'Update Profile'
+        found_passenger = Passenger.objects.get(id=id)
 
-    if request.method == 'POST':
+        if found_passenger in passengers:
 
-        # passenger_form = NewPassenger(request.POST)
+            title = f'Update Profile'
 
-        passenger_profile_form = UpdatePassengerProfile(request.POST, instance=found_passenger.passengerprofile,files=request.FILES)
+            if request.method == 'POST':
 
-        if passenger_profile_form.is_valid():
+                # passenger_form = NewPassenger(request.POST)
 
-            # passenger_details = passenger_form.save(commit=False)
+                passenger_profile_form = UpdatePassengerProfile(request.POST, instance=found_passenger.passengerprofile,files=request.FILES)
 
-            passenger_profile = passenger_profile_form.save(commit=False)
+                if passenger_profile_form.is_valid():
 
-            passenger_profile.passenger = found_passenger
+                    # passenger_details = passenger_form.save(commit=False)
 
-            passenger_profile.profile_pic = passenger_profile_form.cleaned_data['profile_pic']
+                    passenger_profile = passenger_profile_form.save(commit=False)
 
-            passenger_profile.save()
+                    passenger_profile.passenger = found_passenger
 
-            # passenger_details.save()
+                    passenger_profile.profile_pic = passenger_profile_form.cleaned_data['profile_pic']
+
+                    passenger_profile.save()
+
+                    # passenger_details.save()
 
 
-            return redirect(passenger, found_passenger.id)
+                    return redirect(passenger, found_passenger.id)
+
+                else:
+
+                    messages.error(request, ('Please correct the error below.'))
+
+            else:
+
+                # passenger_form = NewPassenger(instance=found_passenger)
+
+                passenger_profile_form = UpdatePassengerProfile(instance=found_passenger.passengerprofile)
+
+                return render(request, 'all-passengers/update-profile.html', {"title":title,"passenger":found_passenger,"passenger_profile_form":passenger_profile_form})
 
         else:
+            return redirect(passenger_login)
 
-            messages.error(request, ('Please correct the error below.'))
+    except ObjectDoesNotExist:
+        raise Http404()
 
-    else:
-
-        # passenger_form = NewPassenger(instance=found_passenger)
-
-        passenger_profile_form = UpdatePassengerProfile(instance=found_passenger.passengerprofile)
-
-        return render(request, 'all-passengers/update-profile.html', {"title":title,"passenger":found_passenger,"passenger_profile_form":passenger_profile_form})
 
 # Passenger see list of drivers
-@login_required(login_url='/new/passenger/')
 def drivers(request,id):
     '''
     View function to display list of driver profiles
     '''
-    passenger = Passenger.objects.get(id=id)
+    passengers = Passenger.objects.all()
 
-    title = "Driver Reviews"
+    try:
 
-    driver_profiles = DriverProfile.objects.all()
+        passenger = Passenger.objects.get(id=id)
 
-    return render(request, "all-passengers/reviews.html", {"title":title,"passenger":passenger, "driver_profiles":driver_profiles})
+        if passenger in passengers:
+
+            title = "Driver Reviews"
+
+            driver_profiles = DriverProfile.objects.all()
+
+            return render(request, "all-passengers/reviews.html", {"title":title,"passenger":passenger, "driver_profiles":driver_profiles})
+        else:
+
+            return redirect(passenger_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
 
 # Passenger see selected driver's profile and reviews
-@login_required(login_url='/new/passenger/')
 def driver_profile(request, passenger_id, driver_profile_id):
     '''
     View function to display list of driver profiles
     '''
-    passenger = Passenger.objects.get(id=passenger_id)
+    passengers = Passenger.objects.all()
 
-    driver_profile = DriverProfile.objects.get(id=driver_profile_id)
+    try:
 
-    title = f'{driver_profile.driver.first_name} {driver_profile.driver.last_name}\'s Profile'
+        passenger = Passenger.objects.get(id=passenger_id)
 
-    reviews = DriverReview.get_driver_reviews(driver_profile_id)
+        if passenger in passengers:
 
-    form = ReviewDriverForm()
+            driver_profile = DriverProfile.objects.get(id=driver_profile_id)
 
-    return render(request, "all-passengers/driver-profile.html", {"title":title, "passenger":passenger, "driver_profile":driver_profile, "reviews":reviews, "form":form})
+            title = f'{driver_profile.driver.first_name} {driver_profile.driver.last_name}\'s Profile'
+
+            reviews = DriverReview.get_driver_reviews(driver_profile_id)
+
+            form = ReviewDriverForm()
+
+            return render(request, "all-passengers/driver-profile.html", {"title":title, "passenger":passenger, "driver_profile":driver_profile, "reviews":reviews, "form":form})
+
+        else:
+
+            return redirect(passenger_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
+
 
 # Passenger create a driver review
 def review_driver(request, passenger_id, driver_profile_id):
@@ -327,36 +425,62 @@ def review_driver(request, passenger_id, driver_profile_id):
     return JsonResponse(data)
 
 # Driver sees list of passengers
-@login_required(login_url='/new/driver/')
 def passengers(request,id):
     '''
     View function to display list of passenger profiles
     '''
-    driver = Driver.objects.get(id=id)
+    drivers = Driver.objects.all()
 
-    title = "Passenger Reviews"
+    try:
 
-    passenger_profiles = PassengerProfile.objects.all()
+        driver = Driver.objects.get(id=id)
 
-    return render(request, "all-drivers/reviews.html", {"title":title,"driver":driver, "passenger_profiles":passenger_profiles})
+        if driver in drivers:
+
+            title = "Passenger Reviews"
+
+            passenger_profiles = PassengerProfile.objects.all()
+
+            return render(request, "all-drivers/reviews.html", {"title":title,"driver":driver, "passenger_profiles":passenger_profiles})
+        else:
+
+            return redirect(driver_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
+
 
 # Driver see selected passenger's profile and reviews
-@login_required(login_url='/new/driver/')
+@login_required(login_url='/login/driver')
 def passenger_profile(request, driver_id, passenger_profile_id):
     '''
     View function to display list of driver profiles
     '''
-    driver = Driver.objects.get(id=driver_id)
+    drivers = Driver.objects.all()
 
-    passenger_profile = PassengerProfile.objects.get(id=passenger_profile_id)
+    try:
 
-    title = f'{passenger_profile.passenger.first_name} {passenger_profile.passenger.last_name}\'s Profile'
+        driver = Driver.objects.get(id=driver_id)
 
-    reviews = PassengerReview.get_passenger_reviews(passenger_profile_id)
+        if driver in drivers:
 
-    form = ReviewPassengerForm()
+            passenger_profile = PassengerProfile.objects.get(id=passenger_profile_id)
 
-    return render(request, "all-drivers/passenger-profile.html", {"title":title, "driver":driver, "passenger_profile":passenger_profile, "reviews":reviews, "form":form})
+            title = f'{passenger_profile.passenger.first_name} {passenger_profile.passenger.last_name}\'s Profile'
+
+            reviews = PassengerReview.get_passenger_reviews(passenger_profile_id)
+
+            form = ReviewPassengerForm()
+
+            return render(request, "all-drivers/passenger-profile.html", {"title":title, "driver":driver, "passenger_profile":passenger_profile, "reviews":reviews, "form":form})
+
+        else:
+
+            return redirect(driver_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
+
 
 # Driver create a passenger review
 def review_passenger(request, driver_id, passenger_profile_id):
@@ -378,86 +502,123 @@ def review_passenger(request, driver_id, passenger_profile_id):
     return JsonResponse(data)
 
 # Passenger see drivers near them
-@login_required(login_url='/new/passenger')
 def driver_near_me(request, passenger_id):
     '''
     View function that displays a list of drivers near the general location of the current passenger
     '''
-    passenger = Passenger.objects.get(id=passenger_id)
+    passengers = Passenger.objects.all()
 
-    passenger_profile = PassengerProfile.objects.get(passenger=passenger_id)
+    try:
 
-    title = f'Drivers near {passenger_profile.passenger.first_name} {passenger_profile.passenger.last_name}'
+        passenger = Passenger.objects.get(id=passenger_id)
 
-    passenger_general_location = passenger_profile.general_location
+        if passenger in passengers:
 
-    travel_plans = TravelPlan.objects.all()
+            passenger_profile = PassengerProfile.objects.get(passenger=passenger_id)
 
-    close_drivers = TravelPlan.get_driver_near_me(passenger_general_location)
+            title = f'Drivers near {passenger_profile.passenger.first_name} {passenger_profile.passenger.last_name}'
 
-    if len(close_drivers) == 0:
+            passenger_general_location = passenger_profile.general_location
 
-        message = f'{passenger_general_location}'
+            travel_plans = TravelPlan.objects.all()
 
-        return render(request, 'all-passengers/driver-near-me.html', {"title":title, "message":message, "passenger":passenger})
-    else:
-        print(close_drivers)
+            close_drivers = TravelPlan.get_driver_near_me(passenger_general_location)
 
-        return render(request, 'all-passengers/driver-near-me.html', {"title":title, "close_drivers":close_drivers, "passenger": passenger})
+            if len(close_drivers) == 0:
 
-    return print(len(close_drivers))
+                message = f'{passenger_general_location}'
+
+                return render(request, 'all-passengers/driver-near-me.html', {"title":title, "message":message, "passenger":passenger})
+            else:
+                print(close_drivers)
+
+                return render(request, 'all-passengers/driver-near-me.html', {"title":title, "close_drivers":close_drivers, "passenger": passenger})
+
+        else:
+
+            return redirect(passenger_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
+
 
 # Driver begins a new journey
-@login_required(login_url='/new/driver/')
 def new_journey(request, driver_profile_id):
     '''
     View function to display a form for creating a new travel plan 
     '''
     title = "New Journey"
 
-    driver_profile = DriverProfile.objects.get(id=driver_profile_id)
+    try:
 
-    found_driver = driver_profile.driver
+        driver_profile = DriverProfile.objects.get(id=driver_profile_id)
 
-    if request.method == 'POST':
+        found_driver = driver_profile.driver
 
-        form = NewTravelPlan(request.POST)
+        drivers = Driver.objects.all()
 
-        if form.is_valid:
+        if found_driver in drivers:
 
-            new_travel_plan = form.save(commit=False)
+            if request.method == 'POST':
 
-            new_travel_plan.driver_profile = driver_profile
+                form = NewTravelPlan(request.POST)
 
-            new_travel_plan.save()
+                if form.is_valid:
 
-            return redirect(current_journey, found_driver.id)
+                    new_travel_plan = form.save(commit=False)
 
-        else :
+                    new_travel_plan.driver_profile = driver_profile
 
-            messages.error(request, ('Please correct the error below.'))
+                    new_travel_plan.save()
 
-    else : 
+                    return redirect(current_journey, found_driver.id)
 
-        form = NewTravelPlan()
+                else :
 
-        return render(request, 'all-drivers/new-journey.html', {"title": title, "form": form, "driver":found_driver})
+                    messages.error(request, ('Please correct the error below.'))
+
+            else : 
+
+                form = NewTravelPlan()
+
+                return render(request, 'all-drivers/new-journey.html', {"title": title, "form": form, "driver":found_driver})
+
+        else:
+
+            return redirect(driver_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
 
 
-@login_required(login_url='/new/driver/')
+# Display list of journeys the current driver has
 def current_journey(request,driver_id):
     '''
     View function to display a driver's travel plans
     '''
-    driver = Driver.objects.get(id=driver_id)
+    drivers = Driver.objects.all()
 
-    driver_profile = driver.driverprofile
+    try:
 
-    travel_plans = TravelPlan.objects.filter(driver_profile=driver_profile)
+        driver = Driver.objects.get(id=driver_id)
 
-    title = f'{driver.first_name} {driver.last_name}\'s Journeys'
+        if driver in drivers:
 
-    return render(request, 'all-drivers/current_journey.html', {"title":title, "driver":driver, "travel_plans":travel_plans, "driver_profile":driver_profile})
+            driver_profile = driver.driverprofile
+
+            travel_plans = TravelPlan.objects.filter(driver_profile=driver_profile)
+
+            title = f'{driver.first_name} {driver.last_name}\'s Journeys'
+
+            return render(request, 'all-drivers/current_journey.html', {"title":title, "driver":driver, "travel_plans":travel_plans, "driver_profile":driver_profile})
+
+        else:
+
+            return redirect(driver_login)
+
+    except ObjectDoesNotExist:
+        raise Http404()
+
 
 
 

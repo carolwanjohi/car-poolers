@@ -23,6 +23,14 @@
 
         <div class="panel-body">
 
+            {%if message%}
+
+               <h2>
+                   {{message}}
+               </h2> 
+
+            {%endif%}
+
             <form action="" method="post" enctype="multipart/form-data">
 
                 {% csrf_token %}
