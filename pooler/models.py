@@ -209,6 +209,14 @@ class TravelPlan(models.Model):
 
     destination = models.CharField(max_length=255)
 
+    travel_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        '''
+        Order travel plans with most recent at the top
+        '''
+        ordering = ['-travel_date']
+
     def __str__(self):
         return self.driver_profile.driver.first_name + ' ' + self.driver_profile.driver.last_name
 
