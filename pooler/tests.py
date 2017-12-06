@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan, Book
 
 # Create your tests here.
 class DriverTestClass(TestCase):
@@ -186,7 +186,6 @@ class PassengerReviewTestClass(TestCase):
         # No passenger reviews were saved so expect True
         self.assertTrue( len(gotten_passenger_reviews) == len(passenger_reviews))
 
-
 class TravelPlanTestClass(TestCase):
     '''
     Test case for Travel Plan class
@@ -228,5 +227,26 @@ class TravelPlanTestClass(TestCase):
 
         # No travel plans were saved so expect True
         self.assertTrue( len(gotten_close_drivers) == len(travel_plans))
+
+class BookTestClass(TestCase):
+    '''
+    Test case for Book class
+    '''
+
+    def test_instance(self):
+        '''
+        Test case to check if self.new_book is an instance of TravelPlan class
+        '''
+        self.jane = Passenger(first_name="Jane", last_name="Doe", phone_number="0712987987")
+        self.jane.save()
+
+        self.james = Driver(first_name="James", last_name="Muriuki", phone_number="0712345656")
+        self.james.save()
+
+        self.test_travel_plan = TravelPlan(driver_profile=self.james.driverprofile ,current_location='Kasarani', destination='Karen')
+
+        self.new_book = Book(passenger_profile=self.jane.passengerprofile, travel_plan=self.test_travel_plan)
+
+        self.assertTrue( isinstance(self.new_book, Book) )
 
 

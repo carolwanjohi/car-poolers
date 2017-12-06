@@ -235,6 +235,17 @@ class TravelPlan(models.Model):
 
         return close_drivers
 
+class Book(models.Model):
+    '''
+    Class that defines a ride booked by a passenger
+    '''
+    passenger_profile = models.ForeignKey(PassengerProfile, on_delete=models.CASCADE)
+
+    travel_plan = models.ForeignKey(TravelPlan, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return 'Bookings for ' + passenger_profile.passenger.first_name + ' ' + passenger_profile.passenger.last_name
+
 
 
 
