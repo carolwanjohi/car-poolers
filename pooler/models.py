@@ -244,7 +244,7 @@ class Book(models.Model):
     travel_plan = models.ForeignKey(TravelPlan, on_delete=models.CASCADE)
 
     def __str__(self):
-        return 'Bookings for ' + passenger_profile.passenger.first_name + ' ' + passenger_profile.passenger.last_name
+        return 'Bookings for ' + self.passenger_profile.passenger.first_name + ' ' + self.passenger_profile.passenger.last_name
 
 
 

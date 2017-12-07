@@ -1,0 +1,148 @@
+{% extends 'all-passengers/base.html' %}
+{% load staticfiles%}
+{% load bootstrap3%}
+
+<!-- Styles block -->
+{% block styles %}
+
+    {{block.super}}
+    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <script src="https://use.fontawesome.com/80caa23151.js"></script>
+
+
+{% endblock %}
+
+<!-- Content block -->
+{% block content %}
+
+    {{block.super}}
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-inverse">
+
+        <div class="container-fluid">
+
+            <div class="container"> 
+
+                <div class="navbar-header">
+
+                    <a href="{%url 'passenger' passenger.id%}" class="navbar-brand siteIcon">
+                        <i class="fa fa-car" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="{%url 'passenger' passenger.id%}" class="navbar-brand siteName">Car Poolers</a>
+
+                </div>
+
+                <div class="navbar-right">
+
+                    <a href="{%url 'drivers'  passenger.id%}">
+                        <h2>
+                            Drivers
+                        </h2>
+                    </a>
+
+                    <a href="{%url 'driverNearMe' passenger.id%}" class="exploreIcon">
+                        <i class="fa fa-compass" aria-hidden="true"></i>
+                    </a>
+
+                    <a href="{%url 'passenger' passenger.id%}" class="userIcon">
+                        <i class="glyphicon glyphicon-user"></i>
+                    </a>
+
+                    <a href="{%url 'index'%}" class="signOut">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <div class="container">
+
+        <div class="row driverPersonalDetails">
+
+            <div class="col-md-6 col-lg-6">
+
+                {% if travel_plan.driver_profile.profile_pic%}
+
+                    <img src="{{travel_plan.driver_profile.profile_pic.url}}" alt="{{travel_plan.driver_profile.driver.first_name}} {{travel_plan.driver_profile.driver.last_name}}" class="img-responsive">
+
+                {% else %}
+
+                    <img src="{%static 'images/user-icon.png'%}" alt="{{travel_plan.driver_profile.driver.first_name}} {{travel_plan.driver_profile.driver.last_name}} Profile Image" class="img-responsive profilePicture">
+
+                {% endif %}
+                
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+
+                <h1>
+                    {{travel_plan.driver_profile.driver.first_name}} {{travel_plan.driver_profile.driver.last_name}}
+                </h1>
+
+                <br>
+
+                <h1>
+                    +254{{travel_plan.driver_profile.driver.phone_number}}
+                </h1>
+                
+            </div>
+
+        </div>
+
+        <div class="row carDetails">
+
+            <div class="col-md-6 col-lg-6">
+
+                {% if travel_plan.driver_profile.car_image%}
+
+                    <img src="{{travel_plan.driver_profile.car_image.url}}" alt="{{travel_plan.driver_profile.driver.first_name}} {{travel_plan.driver_profile.driver.last_name}}" class="img-responsive">
+
+                {% else %}
+
+                    <img src="{%static 'images/car-default.png'%}" alt="{{travel_plan.driver_profile.driver.first_name}} {{travel_plan.driver_profile.driver.last_name}} Profile Image" class="img-responsive profilePicture">
+                    
+                {% endif %}
+
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+
+                {%if message%}
+
+                    <h1>
+                        {{message}}
+                    </h1>
+                    
+                {% else %}
+
+                    <h1>
+                        Space Left : {{seats_left}}
+                    </h1>
+
+                    <br>
+
+                    <a href="{%url 'bookSeat' passenger.id travel_plan.id%}">
+                        Book Seat
+                    </a>
+
+                {% endif %}
+
+                
+                
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+

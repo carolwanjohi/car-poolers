@@ -94,7 +94,7 @@
 
                 <div class="col-md-10 col-lg-10 well">
 
-                    <a href="{% url 'driverProfile' passenger.id close_driver.driver_profile.id%}">
+                    <a href="{% url 'seeRide' passenger.id close_driver.id%}">
 
                         {% if close_driver.driver_profile.profile_pic%}
 
@@ -118,10 +118,6 @@
 
                             <h2>
                                 Travel Time : {{close_driver.travel_date}}
-                            </h2>
-
-                            <h2>
-                                Space Left : {{close_driver.driver_profile.car_capacity}}
                             </h2>
 
                         </h6>

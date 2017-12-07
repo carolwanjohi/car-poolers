@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan, Book
 from .forms import NewDriver, DriverLogin, UpdateDriverProfile, NewPassenger, PassengerLogin, UpdatePassengerProfile, ReviewDriverForm, ReviewPassengerForm, NewTravelPlan
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
@@ -618,6 +618,85 @@ def current_journey(request,driver_id):
 
     except ObjectDoesNotExist:
         raise Http404()
+
+# Display selected driver near me option
+def see_ride(request, passenger_id, travel_plan_id):
+    '''
+    View function that displays moe information about the selected driver near me
+    '''
+    passengers = Passenger.objects.all()
+
+    try:
+
+        found_passenger = Passenger.objects.get(id=passenger_id)
+
+        if found_passenger in passengers:
+
+            passenger_profile = found_passenger.passengerprofile
+
+            travel_plan = TravelPlan.objects.get(id=travel_plan_id)
+
+            existing_bookings = Book.objects.filter(passenger_profile=found_passenger.id).filter(travel_plan=travel_plan.id)
+
+            if len(existing_bookings) < travel_plan.driver_profile.car_capacity:
+
+                seats_left = travel_plan.driver_profile.car_capacity - len(existing_bookings)
+
+                title = f'{travel_plan.driver_profile.driver.first_name} {travel_plan.driver_profile.driver.last_name}\'s Journey'
+
+                return render(request, 'all-passengers/see-ride.html', {"title":title, "passenger":found_passenger, "travel_plan":travel_plan, "seats_left":seats_left})
+
+            elif len(existing_bookings) == travel_plan.driver_profile.car_capacity:
+                title = f'{travel_plan.driver_profile.driver.first_name} {travel_plan.driver_profile.driver.last_name}\'s Journey'
+
+                message = 'This ride is fully booked'
+                return render(request, 'all-passengers/see-ride.html', {"title":title, "passenger":found_passenger, "travel_plan":travel_plan, "message":message, "seats":travel_plan.driver_profile.car_capacity})
+
+        else:
+
+            return redirect(passenger_login)
+
+    except ObjectDoesNotExist:
+
+        raise Http404()
+
+# Book a seat in a car
+def book_seat(request, passenger_id, travel_plan_id):
+    '''
+    Function that books a seat for a passenger
+    '''
+    passengers = Passenger.objects.all()
+
+    try :
+
+        found_passenger = Passenger.objects.get(id=passenger_id)
+
+        if found_passenger in passengers:
+
+            passenger_profile = found_passenger.passengerprofile
+
+            travel_plan = TravelPlan.objects.get(id=travel_plan_id)
+
+            if travel_plan.driver_profile.car_capacity != 0:
+
+                new_booking = Book(passenger_profile=passenger_profile, travel_plan=travel_plan)
+
+                new_booking.save()
+
+                travel_plan.driver_profile.car_capacity -= 1
+
+                travel_plan.save()
+
+                return redirect(see_ride,found_passenger.id, travel_plan.id)
+
+        else :
+
+            return redirect(passenger_login)
+
+    except ObjectDoesNotExist:
+
+        raise Http404()
+
 
 
 

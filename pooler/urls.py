@@ -38,7 +38,11 @@ urlpatterns = [
 
     url( r'^new/journey/(\d+)', views.new_journey, name="newJourney"),
 
-    url( r'^my-journies/(\d+)', views.current_journey, name="currentJourney")
+    url( r'^my-journeys/(\d+)', views.current_journey, name="currentJourney"),
+
+    url ( r'^see-ride/(\d+)/(\d+)', views.see_ride, name="seeRide"),
+
+    url( r'^book-seat/(\d+)/(\d+)', views.book_seat, name="bookSeat"),
 
 ]
 

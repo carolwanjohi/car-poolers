@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan
+from .models import Driver, DriverProfile, Passenger, PassengerProfile, DriverReview, PassengerReview, TravelPlan, Book
 
 # Register your models here.
 # class PostAdmin(admin.ModelAdmin):
@@ -15,6 +15,8 @@ admin.site.register(PassengerProfile)
 admin.site.register(DriverReview)
 admin.site.register(PassengerReview)
 admin.site.register(TravelPlan)
+admin.site.register(Book)
+
 # admin.site.register(Post,PostAdmin)
 # admin.site.register(Comment)
 # admin.site.register(Like)
