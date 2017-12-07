@@ -38,7 +38,7 @@ As a driver I would to:
 ## Setup/Installation Requirements
 
 ### Prerequisites
-* Python 3.6.1
+* Python 3.6.2
 * Virtual environment
 * Postgres Database
 * Internet
@@ -82,9 +82,9 @@ DATABASES = {
 * setting current location and destination feature is missing
 
 ## Technologies Used
-- Python3.6
-- Django
-- Bootstrap
+- Python 3.6.2
+- Django 1.11.7
+- Bootstrap 3
 - Postgres Database
 - CSS
 - HTML
