@@ -31,13 +31,18 @@ As a driver I would to:
 | Update passenger profile | **Click** update profile | Direct the user to a page with a form where the user can update their profile and submit the form |
 | Passenger review a driver | **Click Drivers** in the navbar <br> **Click** on a driver  | Direct user to the selected driver's profile where the user can fill the review form and submit their review |
 | Driver review a passenger | **Click Passengers** in the navbar <br> **Click** on a passenger  | Direct user to the selected passenger's profile where the user can fill the review form and submit their review |
+| Driver setting current location and destination | **Click** new journey | Direct user to a page with a form where the user can input their current location, destination and submit the form |
+| Passenger seeing drivers near them | **Click** explore icon | Direct user to a page with a list of drivers near the current passenger |
+| Passenger booking a seat in a car| **Click** driver displayed <br> **Click** book seat | Book seat for passenger |
 
 ## Setup/Installation Requirements
 
 ### Prerequisites
 * Python 3.6.2
 * Virtual environment
+* Postgres Database
 * Internet
+
 
 ### Installation Process
 1. Copy repolink
@@ -45,11 +50,30 @@ As a driver I would to:
 3. Write `cd car-poolers`
 4. Create a virtual environment with `virtualenv virtual` or try `python3.6 -m venv virtual`
 5. Create .env file `touch .env` and add the following:
-* `SECRET_KEY=<your secret key>`
-* `DEBUG=True`
+```
+SECRET_KEY=<your secret key>
+DEBUG=True
+```
 6. Enter your virtual environment `source virtual/bin/activate`
 7. Run `pip install -r requirements.txt` or `pip3 install -r requirements.txt`
-8. Run `./manage.py runserver` or `python3.6 manage.py runserver` to run the application
+8. Create Postgres Database
+
+```
+psql
+CREATE DATABASE poolers
+```
+9. Change the database informatioin in `car/settings.py` 
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'poolers',
+        'USER': *POSTGRES_USERNAME*,
+        'PASSWORD': *POSTGRES_USERNAME*,
+    }
+}
+``` 
+10. Run `./manage.py runserver` or `python3.6 manage.py runserver` to run the application
 
 ## Known Bugs
 
@@ -58,9 +82,9 @@ As a driver I would to:
 * setting current location and destination feature is missing
 
 ## Technologies Used
-- Python3.6
-- Django
-- Bootstrap
+- Python 3.6.2
+- Django 1.11.7
+- Bootstrap 3
 - Postgres Database
 - CSS
 - HTML
