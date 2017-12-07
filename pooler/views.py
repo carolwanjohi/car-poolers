@@ -636,7 +636,7 @@ def see_ride(request, passenger_id, travel_plan_id):
 
             travel_plan = TravelPlan.objects.get(id=travel_plan_id)
 
-            existing_bookings = Book.objects.filter(passenger_profile=found_passenger.id).filter(travel_plan=travel_plan.id)
+            existing_bookings = Book.objects.filter(travel_plan=travel_plan.id)
 
             if len(existing_bookings) < travel_plan.driver_profile.car_capacity:
 
