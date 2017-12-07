@@ -31,6 +31,9 @@ As a driver I would to:
 | Update passenger profile | **Click** update profile | Direct the user to a page with a form where the user can update their profile and submit the form |
 | Passenger review a driver | **Click Drivers** in the navbar <br> **Click** on a driver  | Direct user to the selected driver's profile where the user can fill the review form and submit their review |
 | Driver review a passenger | **Click Passengers** in the navbar <br> **Click** on a passenger  | Direct user to the selected passenger's profile where the user can fill the review form and submit their review |
+| Driver setting current location and destination | **Click** new journey | Direct user to a page with a form where the user can input their current location, destination and submit the form |
+| Passenger seeing drivers near them | **Click** explore icon | Direct user to a page with a list of drivers near the current passenger |
+| Passenger booking a seat in a car| **Click** driver displayed <br> **Click** book seat | Book seat for passenger |
 
 ## Setup/Installation Requirements
 
