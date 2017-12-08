@@ -83,8 +83,6 @@ def driver_login(request):
                 try:
                     found_driver = Driver.objects.get(phone_number=phone_number)
 
-                    print(found_driver)
-
                     return redirect(driver, found_driver.id)
 
                 except ObjectDoesNotExist:
@@ -530,7 +528,6 @@ def driver_near_me(request, passenger_id):
 
                 return render(request, 'all-passengers/driver-near-me.html', {"title":title, "message":message, "passenger":passenger})
             else:
-                print(close_drivers)
 
                 return render(request, 'all-passengers/driver-near-me.html', {"title":title, "close_drivers":close_drivers, "passenger": passenger})
 

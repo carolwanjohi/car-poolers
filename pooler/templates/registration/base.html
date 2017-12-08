@@ -23,25 +23,39 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
 
-        <div class="row">
-            <!--  Empty Div -->
-            <div class="col-md-2 col-lg-2">
-                
-            </div>
+        <h1 class="welcome">
 
-            <div class="col-md-8 col-lg-8">
+            <a href="{% url 'index'%}">
+                Welcome To Car Poolers
+            </a>
+            
+        </h1>
+        
+        <hr>
 
-            <!-- Content block -->
-            {% block content %}    
+        <div class="container">
 
-            {% endblock %}
+            <div class="row">
+                <!--  Empty Div -->
+                <div class="col-md-2 col-lg-2">
+                    
+                </div>
 
-            </div>
-            <!--  Empty Div -->
-            <div class="col-md-2 col-lg-2">
-                
+                <div class="col-md-8 col-lg-8">
+
+                <!-- Content block -->
+                {% block content %}    
+
+                {% endblock %}
+
+                </div>
+                <!--  Empty Div -->
+                <div class="col-md-2 col-lg-2">
+                    
+                </div>
+
             </div>
 
         </div>

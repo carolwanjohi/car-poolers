@@ -30,7 +30,9 @@
 
             <h1 class="welcome">
 
-                Welcome To Car Poolers
+                <a href="{% url 'index'%}">
+                    Welcome To Car Poolers
+                </a>
                 
             </h1>
             
@@ -46,7 +48,11 @@
 
                             <h1>
                                 <a href="{%url 'newdriver'%}">
-                                    Driver
+
+                                    <button class="btn btn-default btn-lg driverButton">
+                                        Driver
+                                    </button>
+                                    
                                 </a>
                             </h1>
 
@@ -60,7 +66,9 @@
 
                             <h1>
                                 <a href="{%url 'newpassenger'%}">
-                                    Passenger
+                                    <button class="btn btn-default btn-lg passengerButton">
+                                        Passenger
+                                    </button>
                                 </a>
                             </h1>
 

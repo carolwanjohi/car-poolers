@@ -1,4 +1,15 @@
 /*Style registration form for driver and passenger*/
+h1.welcome {
+    text-align: center;
+    margin-top: 1.5em;
+    color: #03256C;
+}
+
+h1.welcome > a:hover {
+    color: #2541B2;
+    text-decoration: none;
+}
+
 div.row{
     margin-top: 4.5em;
 }
@@ -18,4 +29,84 @@ div.panel-body > h4 > a {
 div.panel-body > h4 > a:hover {
     color: #06BEE1;
     text-decoration: none;
+}
+
+h1.welcome > a {
+  color: #03256C;
+  position: relative;
+  /* Chrome and Safari*/
+  -webkit-animation-name: replacement -animation;
+  -webkit-animation-duration: 4s;
+  -webkit-animation-iteration-count: infinite;
+  /*Firefox*/
+  -moz-animation-name: replacement-animation;
+  -moz-animation-duration: 4s;
+  -moz-animation-iteration-count: infinite;
+  /*Opera*/
+  -o-animation-name: replacement-animation;
+  -o-animation-duration: 4s;
+  -o-animation-iteration-count: infinite;
+  animation-name: replacement-animation;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+/*Chrome and Safari*/
+
+@-webkit-keyframes replacement-animation {
+  0% {
+    color: #03256C;
+  }
+  25% {
+    color: #2541B2;
+  }
+  50% {
+    color: #1768AC;
+  }
+  75% {
+    color: #06BEE1;
+  }
+  100% {
+    color: #2E86C1;
+  }
+}
+
+/*Fifefox*/
+
+@-moz-keyframes replacement-animation {
+  0% {
+    color: #03256C;
+  }
+  25% {
+    color: #2541B2;
+  }
+  50% {
+    color: #1768AC;
+  }
+  75% {
+    color: #06BEE1;
+  }
+  100% {
+    color: #2E86C1;
+  }
+}
+
+/*Opera*/
+
+@-o-keyframes replacement-animation {
+  0% {
+    color: #03256C;
+  }
+  25% {
+    color: #2541B2;
+  }
+  50% {
+    color: #1768AC;
+  }
+  75% {
+    color: #06BEE1;
+  }
+  100% {
+    color: #2E86C1;
+  }
 }

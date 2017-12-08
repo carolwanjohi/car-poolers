@@ -1,38 +1,58 @@
 /*Style index template*/
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.container:after {
+    background: url('/static/images/background.jpg') no-repeat center center;
+    width: 100%; 
+    height: 100vh;
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    content:'';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.5;
+}
+
 h1.welcome {
     text-align: center;
     margin-top: 1.5em;
     color: #03256C;
 }
 
+h1.welcome > a:hover {
+    color: #2541B2;
+    text-decoration: none;
+}
+
 div.row.driverRow, div.row.passengerRow {
     text-align: center;
-/*    border: 0.05em solid #000;
-    padding-left: 0.25em;
-    padding-right: 0.25em;
-    padding-top: 0.75em;
-    padding-bottom: 0.75em;
-    background-color: #06BEE1;*/
 }
 
 div.row.driverRow {
-    margin-top: 3em;
+    margin: 8em;
 }
 
 div.row.passengerRow {
-    margin-top: 10em;
+    margin: 8em;
 }
 
 div.row.driverRow > li > h1 > a,  div.row.passengerRow > li > h1 > a {
     color: #2541B2;
 }
 
-div.row.driverRow > li > h1 > a:hover,  div.row.passengerRow > li > h1 > a:hover {
-    color: #2541B2;
-    text-decoration: none;
+button.btn.btn-default.btn-lg.driverButton, button.btn.btn-default.btn-lg.passengerButton {
+    width: 80%;
+    background-color: #fff;
+    border: 2px solid #2E86C1;
 }
 
-h1.welcome, div.row.driverRow > li > h1 > a,  div.row.passengerRow > li > h1 > a  {
+h1.welcome > a {
   color: #03256C;
   position: relative;
   /* Chrome and Safari*/
