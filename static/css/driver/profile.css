@@ -1,0 +1,35 @@
+/*Style profile template for drivers*/
+div.row.driverRow, div.row.carRow {
+    margin-bottom: 4em;
+}
+
+img.img-responsive.profilePicture {
+    border-radius: 50%;
+}
+
+div.col-sm-6.col-md-6.col-lg-6.driverInfo, div.col-sm-6.col-md-6.col-lg-6.carInfo {
+    margin-top: 3.5em;
+}
+
+div.row.updateRow > li > h1 > a {
+    color: #2541B2;
+}
+
+button.btn.btn-default.btn-lg.updateButton, button.btn.btn-default.btn-lg.newJourneyButton {
+    width: 80%;
+    background-color: #fff;
+    border: 2px solid #2E86C1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

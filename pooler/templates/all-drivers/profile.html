@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <link rel="stylesheet" href="{% static 'css/driver/profile.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -38,13 +38,13 @@
                 <div class="navbar-center">
 
                     <a href="{%url 'newJourney' driver.driverprofile.id%}">
-                        <h2>
+                        <h2 class="newJourneyLink">
                             New Journey
                         </h2>
                     </a>
 
                     <a href="{%url 'passengers' driver.id%}">
-                        <h2>
+                        <h2 class="passengersLink">
                             Passengers
                         </h2>
                     </a>
@@ -69,12 +69,14 @@
 
     </nav>
 
+    <hr>
+
     <div class="container">
 
         <div class="row driverRow">
 
             <!-- Profile Image -->
-            <div class="col md-6 col-lg-6">
+            <div class="col-sm-6 col-md-6 col-lg-6">
 
                 {% if driver_profile.profile_pic%}
 
@@ -89,7 +91,7 @@
             </div>
 
            <!-- Driver's Info -->
-            <div class="col md-6 col-lg-6">
+            <div class="col-sm-6 col-md-6 col-lg-6 driverInfo">
 
                 <h1>
                     {{driver.first_name}} {{driver.last_name}}
@@ -111,6 +113,8 @@
 
         </div>
 
+        <hr>
+
         <div class="row carRow">
 
             <!-- Car Image -->
@@ -129,7 +133,7 @@
             </div>
             
             <!-- Car Info -->
-            <div class="col-md-6 col-lg-6">
+            <div class="col-sm-6 col-md-6 col-lg-6 carInfo">
 
                 <h1>
                     Number plate : {{driver_profile.car_number_plate}}
@@ -151,13 +155,23 @@
             
         </div>
 
+        <hr>
+
         <div class="row updateRow">
 
             <!-- Update Profile -->
             <div class="col-md-4 col-lg-4">
             
                 <h1>
-                    <a href="{%url 'updateDriverProfile' driver.id%}">Update Profile</a>
+                    
+                    <a href="{%url 'updateDriverProfile' driver.id%}">
+
+                        <button class="btn btn-default btn-lg updateButton">
+                            Update Profile
+                        </button>
+
+                    </a>
+
                 </h1>
                 
             </div>
@@ -171,7 +185,13 @@
             <div class="col-md-4 col-lg-4">
                 
                 <h1>
-                    <a href="{%url 'newJourney' driver_profile.id%}">New Journey</a>
+                    <a href="{%url 'newJourney' driver_profile.id%}">
+
+                        <button class="btn btn-default btn-lg newJourneyButton">
+                            New Journey
+                        </button>
+                        
+                    </a>
                 </h1>
 
             </div>
