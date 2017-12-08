@@ -33,18 +33,23 @@
 
                     <a href="{%url 'driver' driver.id%}" class="navbar-brand siteName">Car Poolers</a>
 
+                    <a href="{% url 'driver' driver.id%}" class="homeOnPhone">
+                    <i class="glyphicon glyphicon-home"></i>
+                    
+                </a>
+
                 </div>
 
                 <div class="navbar-center">
 
                     <a href="{%url 'newJourney' driver.driverprofile.id%}">
-                        <h2>
+                        <h2 class="newJourneyLink">
                             New Journey
                         </h2>
                     </a>
 
                     <a href="{%url 'passengers' driver.id%}">
-                        <h2>
+                        <h2 class="passengersLink">
                             Passengers
                         </h2>
                     </a>
@@ -68,6 +73,8 @@
         </div>
 
     </nav>
+
+    <hr>
 
     <div class="container">
         
