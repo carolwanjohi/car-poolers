@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <link rel="stylesheet" href="{% static 'css/driver/current-journey.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -80,32 +80,49 @@
         
         <div class="row travelPlans">
 
-            {% for travel_plan in travel_plans %}
-                <h2>
-                    Travel Date : {{travel_plan.travel_date}}
-                </h2>
+            <!-- Empty Div -->
+            <div class="col-md-2 col-lg-2">
+                
+            </div>
 
-                <br>
+            <!-- Travel Plans column -->
 
-                <h2>
-                    Current Location : {{travel_plan.current_location}}
-                </h2>
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 
-                <br>
+                {% for travel_plan in travel_plans %}
 
-                <h2>
-                    Destination : {{travel_plan.destination}}
-                </h2>
+                    <div class="panel panel-default">
 
-                <br>
+                        <div class="panel-body">
 
-                <h2>
-                    Space Left : {{travel_plan.driver_profile.car_capacity}}
-                </h2>
+                            <h2>
+                                Travel Date : {{travel_plan.travel_date}}
+                            </h2>
 
-                <hr>
+                            <br>
 
-            {% endfor %}
+                            <h2>
+                                Current Location : {{travel_plan.current_location}}
+                            </h2>
+
+                            <br>
+
+                            <h2>
+                                Destination : {{travel_plan.destination}}
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- Empty Div -->
+            <div class="col-md-2 col-lg-2">
+                
+            </div>
 
         </div>
 
