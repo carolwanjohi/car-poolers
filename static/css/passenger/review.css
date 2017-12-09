@@ -1,0 +1,34 @@
+/*Style review template for passenger*/
+img.img-responsive.profilePicture {
+    border-radius: 100%;
+    height: 40vh;
+}
+
+h6.driverName {
+    text-align: center;
+    margin-top: 2em;
+    font-size: 2em;
+
+}
+
+@media only screen and (min-device-width: 0px) and (max-device-width: 500px)  { 
+    img.img-responsive.profilePicture {
+        height: 25vh;
+    } 
+
+    h6.driverName {
+        text-align: center;
+        font-size: 3em;
+    }   
+}
+
+@media only screen and (min-device-width: 505px) and (max-device-width: 770px)  { 
+    img.img-responsive.profilePicture {
+        height: 55vh;
+    } 
+
+    h6.driverName {
+        text-align: center;
+        font-size: 3em;
+    }      
+}
