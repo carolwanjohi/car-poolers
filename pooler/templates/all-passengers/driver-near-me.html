@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/reviews.css'%}">
+    <link rel="stylesheet" href="{% static 'css/passenger/review.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -96,46 +96,64 @@
         {% if close_drivers %}
 
         <div class="row driverProfilesRow">
-            
-            {% for close_driver in close_drivers %}
 
-                <!-- Profile Div -->
-
-                <div class="col-md-10 col-lg-10 well">
-
-                    <a href="{% url 'seeRide' passenger.id close_driver.id%}">
-
-                        {% if close_driver.driver_profile.profile_pic%}
-
-                        <img src="{{close_driver.driver_profile.profile_pic.url}}" alt="{{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}}" class="img-responsive profilePicture">
-
-                        {% else %}
-
-                            <img src="{%static 'images/user-icon.png'%}" alt="{{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}} Profile Image" class="img-responsive profilePicture">
-
-                        {% endif %}
-
-                        <h6 class="username">
-
-                            <h2>
-                                {{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}}
-                            </h2>
-
-                            <h2>
-                                Destination : {{close_driver.destination}}
-                            </h2>
-
-                            <h2>
-                                Travel Time : {{close_driver.travel_date}}
-                            </h2>
-
-                        </h6>
-                        
-                    </a>
+            <!-- Empty Div -->
+            <div class="col-md-2 col-lg-2">
                 
-                </div>
+            </div>
 
-            {% endfor %}
+            <!-- Driver Profiles column -->
+
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+
+                {% for close_driver in close_drivers %}
+
+                    <!-- Profile Div -->
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            
+                            <a href="{% url 'seeRide' passenger.id close_driver.id%}">
+
+                                {% if close_driver.driver_profile.profile_pic%}
+
+                                    <img src="{{close_driver.driver_profile.profile_pic.url}}" alt="{{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}}" class="img-responsive profilePicture">
+
+                                {% else %}
+
+                                    <img src="{%static 'images/user-icon.png'%}" alt="{{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}} Profile Image" class="img-responsive profilePicture">
+
+                                {% endif %}
+
+                                <h2 class="driverName">
+                                    {{close_driver.driver_profile.driver.first_name}} {{close_driver.driver_profile.driver.last_name}}
+                                </h2>
+
+                                <h2 class="driverDestiantion">
+                                    Destination : {{close_driver.destination}}
+                                </h2>
+
+                                <h2 class="driverTravelDate">
+                                    Travel Time : {{close_driver.travel_date}}
+                                </h2>
+                                
+                            </a>
+
+                        </div>
+                    
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- Empty Div -->
+            <div class="col-md-2 col-lg-2">
+                
+            </div>
+            
+      
 
         </div>
         
