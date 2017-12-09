@@ -1,0 +1,29 @@
+/*Style update profile template for passengers*/
+.panel-default>.panel-heading {
+    background-color: #06BEE1;
+}
+
+.panel-body {
+    padding-left: 20em;
+}
+
+div.panel-body > h4 > a {
+    color: #2541B2;
+}
+
+div.panel-body > h4 > a:hover {
+    color: #06BEE1;
+    text-decoration: none;
+}
+
+@media only screen and (min-device-width: 0px) and (max-device-width: 500px)  { 
+    .panel-body {
+        padding-left: 12.5em;
+    }      
+}
+
+@media only screen and (min-device-width: 505px) and (max-device-width: 770px)  { 
+    .panel-body {
+        padding-left: 10em;
+    }      
+}
