@@ -29,7 +29,7 @@ div.navbar-center {
     display: inline-flex;
 }
 
-.newJourneyLink, .passengersLink {
+.newJourneyLink, .passengersLink, .myJourneys {
     margin-top: 4%;
 }
 
@@ -39,6 +39,12 @@ div.navbar-center {
 
 .passengersLink {
     margin-left: 4em;
+}
+
+i.fa.fa-archive {
+    margin-left: 1.5em;
+    font-size: 2.75em;
+    margin-top: -17%;
 }
 
 .userIcon, .signOut {
@@ -73,9 +79,40 @@ a.navbar-brand.siteIcon:hover, a.navbar-brand.siteName:hover, a.userIcon:hover, 
         margin-top: -5%;
         font-size: 3.5em;
         margin-right: 0.5em;
+    }
+
+    i.fa.fa-archive {
+        margin-left: 3em;
+        font-size: 2.75em;
+        margin-top: -4%;
     }     
 }
 
+@media only screen and (min-device-width: 771px) and (max-device-width: 1030px)  { 
+    
+    .newJourneyLink, .passengersLink, .myJourneys {
+        margin-top: 4%;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }
+
+    .passengersLink {
+        border-left: 0.05em solid #000;
+        border-right: 0.05em solid #000;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+    }
+
+    i.fa.fa-archive {
+        font-size: 2.5em;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }   
+
+    a..myJourneys {
+        margin-top: -4%;
+    }  
+}
 
 
 

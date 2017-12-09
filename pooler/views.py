@@ -449,7 +449,6 @@ def passengers(request,id):
 
 
 # Driver see selected passenger's profile and reviews
-@login_required(login_url='/login/driver')
 def passenger_profile(request, driver_id, passenger_profile_id):
     '''
     View function to display list of driver profiles
