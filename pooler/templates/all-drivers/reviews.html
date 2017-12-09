@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <link rel="stylesheet" href="{% static 'css/driver/review.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -79,35 +79,59 @@
     <div class="container">
 
         <div class="row passengerProfilesRow">
-            
-            {% for passenger_profile in passenger_profiles %}
 
-                <!-- Profile Div -->
-
-                <div class="col-md-10 col-lg-10 well">
-
-                    <a href="{% url 'passengerProfile' driver.id passenger_profile.id%}">
-
-                        {% if passenger_profile.profile_pic%}
-
-                        <img src="{{passenger_profile.profile_pic.url}}" alt="{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}" class="img-responsive profilePicture">
-
-                        {% else %}
-
-                            <img src="{%static 'images/user-icon.png'%}" alt="
-                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}'s Profile Image" class="img-responsive profilePicture">
-
-                        {% endif %}
-
-                        <h6 class="passengerName">
-                            {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}
-                        </h6>
-                        
-                    </a>
+            <!-- Empty Div -->
+            <div class="col-md-3 col-lg-3">
                 
-                </div>
+            </div>
 
-            {% endfor %}
+            <!-- Passenger Profiles column -->
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            
+                {% for passenger_profile in passenger_profiles %}
+
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+
+                            <a href="{% url 'passengerProfile' driver.id passenger_profile.id%}">
+
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    {% if passenger_profile.profile_pic%}
+
+                                    <img src="{{passenger_profile.profile_pic.url}}" alt="{{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}" class="img-responsive profilePicture">
+
+                                    {% else %}
+
+                                        <img src="{%static 'images/user-icon.png'%}" alt="
+                                        {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}'s Profile Image" class="img-responsive profilePicture">
+
+                                    {% endif %}
+                                </div>
+
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                                    <h6 class="passengerName">
+                                        {{passenger_profile.passenger.first_name}} {{passenger_profile.passenger.last_name}}
+                                    </h6>
+
+                                </div>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- Empty Div -->
+            <div class="col-md-3 col-lg-3">
+                
+            </div>
 
         </div>
 
