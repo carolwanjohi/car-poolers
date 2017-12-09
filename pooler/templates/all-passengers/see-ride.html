@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <link rel="stylesheet" href="{% static 'css/driver/profile.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -80,7 +80,7 @@
 
                 {% if travel_plan.driver_profile.profile_pic%}
 
-                    <img src="{{travel_plan.driver_profile.profile_pic.url}}" alt="{{travel_plan.driver_profile.driver.first_name}} {{travel_plan.driver_profile.driver.last_name}}" class="img-responsive">
+                    <img src="{{travel_plan.driver_profile.profile_pic.url}}" alt="{{travel_plan.driver_profile.driver.first_name}} {{travel_plan.driver_profile.driver.last_name}}" class="img-responsive  profilePicture">
 
                 {% else %}
 
@@ -105,6 +105,8 @@
             </div>
 
         </div>
+
+        <hr>
 
         <div class="row carDetails">
 
@@ -138,9 +140,17 @@
 
                     <br>
 
-                    <a href="{%url 'bookSeat' passenger.id travel_plan.id%}">
-                        Book Seat
-                    </a>
+                    <h1>
+                        <a href="{%url 'bookSeat' passenger.id travel_plan.id%}">
+
+                            <button class=" btn btn-default btn-lg bookSeatButton">
+                                Book Seat
+                            </button> 
+                        
+                        </a>
+                    </h1>
+
+                    
 
                 {% endif %}
 

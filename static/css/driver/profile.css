@@ -1,5 +1,5 @@
 /*Style profile template for drivers*/
-div.row.driverRow, div.row.carRow {
+div.row.driverRow, div.row.carRow, div..row.driverPersonalDetails, div.row.carDetails {
     margin-bottom: 4em;
 }
 
@@ -15,7 +15,7 @@ div.row.updateRow > li > h1 > a {
     color: #2541B2;
 }
 
-button.btn.btn-default.btn-lg.updateButton, button.btn.btn-default.btn-lg.newJourneyButton {
+button.btn.btn-default.btn-lg.updateButton, button.btn.btn-default.btn-lg.newJourneyButton, button.btn.btn-default.btn-lg.bookSeatButton {
     width: 80%;
     background-color: #fff;
     border: 2px solid #2E86C1;
