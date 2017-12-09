@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <link rel="stylesheet" href="{% static 'css/passenger/driver-profile.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -74,6 +74,12 @@
 
     <div class="container">
 
+        <!-- Empty Div -->
+
+        <div class="col-md-1 col-lg-1 ">
+            
+        </div>
+
         <!-- Driver Profile Div -->
 
         <div class="col-md-10 col-lg-10">
@@ -92,7 +98,7 @@
 
                     {% endif %}
 
-                    <h6 class="drivername">
+                    <h6 class="driverName">
                         {{driver_profile.driver.first_name}} {{driver_profile.driver.last_name}}
                     </h6>
 
@@ -141,6 +147,14 @@
             </div>
 
         </div>
+
+
+        <!-- Empty Div -->
+
+        <div class="col-md-1 col-lg-1 ">
+            
+        </div>
+        
     </div>
 
 {% endblock %}
