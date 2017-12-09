@@ -662,37 +662,31 @@ def book_seat(request, passenger_id, travel_plan_id):
     '''
     Function that books a seat for a passenger
     '''
-    passengers = Passenger.objects.all()
 
-    try :
+    found_passenger = Passenger.objects.get(id=passenger_id)
 
-        found_passenger = Passenger.objects.get(id=passenger_id)
+    passenger_profile = found_passenger.passengerprofile
 
-        if found_passenger in passengers:
+    travel_plan = TravelPlan.objects.get(id=travel_plan_id)
 
-            passenger_profile = found_passenger.passengerprofile
+    existing_bookings = Book.objects.filter(travel_plan=travel_plan.id)
 
-            travel_plan = TravelPlan.objects.get(id=travel_plan_id)
+    if len(existing_bookings) < travel_plan.driver_profile.car_capacity:
 
-            if travel_plan.driver_profile.car_capacity != 0:
+        new_booking = Book(passenger_profile=passenger_profile, travel_plan=travel_plan)
 
-                new_booking = Book(passenger_profile=passenger_profile, travel_plan=travel_plan)
+        new_booking.save()
 
-                new_booking.save()
+        data = {'success':'Your seat has successfully been booked'}
 
-                travel_plan.driver_profile.car_capacity -= 1
+        return JsonResponse(data) 
 
-                travel_plan.save()
+    elif len(existing_bookings) == travel_plan.driver_profile.car_capacity: 
+        data = {'success' : 'The ride is fully booked'}
 
-                return redirect(see_ride,found_passenger.id, travel_plan.id)
+        return JsonResponse(data) 
 
-        else :
 
-            return redirect(passenger_login)
-
-    except ObjectDoesNotExist:
-
-        raise Http404()
 
 
 

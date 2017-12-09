@@ -42,7 +42,7 @@ urlpatterns = [
 
     url ( r'^see-ride/(\d+)/(\d+)', views.see_ride, name="seeRide"),
 
-    url( r'^book-seat/(\d+)/(\d+)', views.book_seat, name="bookSeat"),
+    url( r'^ajax/book-seat/see-ride/(\d+)/(\d+)', views.book_seat, name="bookSeat"),
 
 ]
 

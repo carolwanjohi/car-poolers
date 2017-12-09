@@ -140,17 +140,15 @@
 
                     <br>
 
-                    <h1>
-                        <a href="{%url 'bookSeat' passenger.id travel_plan.id%}">
+                    <form action="{%url 'seeRide' passenger.id travel_plan.id%}" method="post">
 
-                            <button class=" btn btn-default btn-lg bookSeatButton">
-                                Book Seat
-                            </button> 
+                        {%csrf_token%}
+
+                        <button class=" btn btn-default btn-lg bookSeatButton">
+                            Book Seat
+                        </button> 
                         
-                        </a>
-                    </h1>
-
-                    
+                    </form>
 
                 {% endif %}
 
@@ -162,6 +160,12 @@
 
     </div>
 
+{% endblock %}
+
+<!-- Scripts block -->
+{% block scripts %}
+    {{block.super}}
+    <script type="text/javascript" src="{%static 'js/book-seat.js'%}"></script>
 {% endblock %}
 
 
