@@ -6,7 +6,7 @@
 {% block styles %}
 
     {{block.super}}
-    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+    <link rel="stylesheet" href="{% static 'css/passenger/profile.css'%}">
     <script src="https://use.fontawesome.com/80caa23151.js"></script>
 
 
@@ -33,12 +33,15 @@
 
                     <a href="{%url 'passenger' passenger.id%}" class="navbar-brand siteName">Car Poolers</a>
 
+                    <a href="{% url 'passenger' passenger.id%}" class="homeOnPhone">
+                    <i class="glyphicon glyphicon-home"></i>
+
                 </div>
 
-                <div class="navbar-right">
+                <div class="navbar-center">
 
                     <a href="{%url 'drivers'  passenger.id%}">
-                        <h2>
+                        <h2 class="driversLink">
                             Drivers
                         </h2>
                     </a>
@@ -46,6 +49,10 @@
                     <a href="{%url 'driverNearMe' passenger.id%}" class="exploreIcon">
                         <i class="fa fa-compass" aria-hidden="true"></i>
                     </a>
+
+                </div>
+
+                <div class="navbar-right">
 
                     <a href="{%url 'passenger' passenger.id%}" class="userIcon">
                         <i class="glyphicon glyphicon-user"></i>
@@ -62,6 +69,8 @@
         </div>
 
     </nav>
+
+    <hr>
 
     <div class="container">
     
@@ -83,7 +92,7 @@
             </div>
 
            <!-- Passenger's Info -->
-            <div class="col md-6 col-lg-6">
+            <div class="col-sm-6 col-md-6 col-lg-6 passengerInfo">
 
                 <h1>
                     {{passenger.first_name}} {{passenger.last_name}}
@@ -113,10 +122,33 @@
 
 
         <div class="row updateRow">
+
+            <!-- Empty div -->
+            <div class="col-md-2 col-lg-2">
+                
+            </div>
             
-            <h1>
-                <a href="{%url 'updatePassengerProfile' passenger.id%}">Update Profile</a>
-            </h1>
+            <div class="col-md-8 col-lg-8">
+
+                <h1>
+
+                    <a href="{%url 'updatePassengerProfile' passenger.id%}">
+
+                        <button class="btn btn-default btn-lg updateButton">
+                            Update Profile
+                        </button>
+
+                    </a>
+
+                </h1>
+                
+            </div>
+            
+
+            <!-- Empty div -->
+            <div class="col-md-2 col-lg-2">
+                
+            </div>
 
         </div>
 

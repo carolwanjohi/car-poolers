@@ -1,0 +1,93 @@
+/*Style the navbar*/
+div.container {
+    margin-top: 0.75em;
+}
+
+.navbar{
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.siteIcon{
+    margin-top: -5%;
+    font-size: 3.5em;
+    margin-right: 0.5em;
+}
+
+.siteName{
+    font-size: 2.5em;
+    color: #000;
+    border-left: 0.05em solid #000;
+    padding-left: 0.75em;
+}
+
+.homeOnPhone {
+    display: none;
+}
+
+div.navbar-center {
+    display: inline-flex;
+}
+
+.exploreIcon, .driversLink {
+    margin-top: 4%;
+}
+
+i.fa.fa-compass {
+    margin-left: 3em;
+    font-size: 2.75em;
+    margin-top: -4%;
+}
+
+.driversLink {
+    margin-left: 4em;
+}
+
+.userIcon, .signOut {
+    font-size: 3em;
+    color: #000;
+}
+
+.signOut {
+    margin-left: 1em;
+}
+
+a.navbar-brand.siteIcon, a.navbar-brand.siteName, div.navbar-center > a, a.homeOnPhone {
+    color: #000;
+}
+
+a.navbar-brand.siteIcon:hover, a.navbar-brand.siteName:hover, a.userIcon:hover, a.signOut:hover, div.navbar-center > a:hover, a.homeOnPhone:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+@media only screen and (min-device-width: 0px) and (max-device-width: 770px)  { 
+    .siteName {
+        display: none;
+    } 
+
+    .driversLink {
+        margin-left: 30%;
+    }
+
+    .homeOnPhone {
+        display: inline;
+        margin-top: -5%;
+        font-size: 3.5em;
+        margin-right: 0.5em;
+    }     
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

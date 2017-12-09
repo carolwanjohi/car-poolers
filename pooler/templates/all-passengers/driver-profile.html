@@ -33,12 +33,15 @@
 
                     <a href="{%url 'passenger' passenger.id%}" class="navbar-brand siteName">Car Poolers</a>
 
+                    <a href="{% url 'passenger' passenger.id%}" class="homeOnPhone">
+                    <i class="glyphicon glyphicon-home"></i>
+
                 </div>
 
-                <div class="navbar-right">
+                <div class="navbar-center">
 
-                    <a href="{%url 'drivers' passenger.id%}">
-                        <h2>
+                    <a href="{%url 'drivers'  passenger.id%}">
+                        <h2 class="driversLink">
                             Drivers
                         </h2>
                     </a>
@@ -46,6 +49,10 @@
                     <a href="{%url 'driverNearMe' passenger.id%}" class="exploreIcon">
                         <i class="fa fa-compass" aria-hidden="true"></i>
                     </a>
+
+                </div>
+
+                <div class="navbar-right">
 
                     <a href="{%url 'passenger' passenger.id%}" class="userIcon">
                         <i class="glyphicon glyphicon-user"></i>
@@ -62,6 +69,8 @@
         </div>
 
     </nav>
+
+    <hr>
 
     <div class="container">
 
