@@ -42,7 +42,7 @@ def new_driver(request):
 
             for existing_driver in drivers:
 
-                if new_driver.phone_number != existing_driver.phone_number:
+                if new_driver.phone_number == existing_driver.phone_number:
                     message = 'The number is already registered'
 
                     messages.error(request, ('This number is already registered'))
@@ -98,7 +98,8 @@ def driver_login(request):
             return render(request, 'registration/driver/login.html',{"title":title,"form":form})
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_driver)
+        # raise Http404()
 
 # Drive homepage is Profile page
 def driver(request, id):
@@ -123,7 +124,8 @@ def driver(request, id):
             return redirect(driver_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_driver)
+        # raise Http404()
 
 # Driver update profile
 @transaction.atomic
@@ -183,7 +185,8 @@ def update_driver_profile(request, id):
             return redirect(driver_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_driver)
+        # raise Http404()
 
 # Passenger registration and log in
 def new_passenger(request):
@@ -210,7 +213,7 @@ def new_passenger(request):
 
             for existing_passenger in passengers:
 
-                if new_passenger.phone_number != existing_passenger.phone_number:
+                if new_passenger.phone_number == existing_passenger.phone_number:
                     message = 'The number is already registered'
 
                     messages.error(request, ('This number is already registered'))
@@ -286,7 +289,9 @@ def passenger(request, id):
             return redirect(passenger_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_passenger)
+
+        # raise Http404()
 
 
 # Passenger update profile 
@@ -344,7 +349,9 @@ def update_passenger_profile(request, id):
             return redirect(passenger_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_passenger)
+
+        # raise Http404()
 
 
 # Passenger see list of drivers
@@ -370,7 +377,9 @@ def drivers(request,id):
             return redirect(passenger_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_passenger)
+
+        # raise Http404()
 
 # Passenger see selected driver's profile and reviews
 def driver_profile(request, passenger_id, driver_profile_id):
@@ -400,7 +409,9 @@ def driver_profile(request, passenger_id, driver_profile_id):
             return redirect(passenger_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_passenger)
+
+        # raise Http404()
 
 
 # Passenger create a driver review
@@ -445,7 +456,9 @@ def passengers(request,id):
             return redirect(driver_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_driver)
+
+        # raise Http404()
 
 
 # Driver see selected passenger's profile and reviews
@@ -476,7 +489,9 @@ def passenger_profile(request, driver_id, passenger_profile_id):
             return redirect(driver_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_driver)
+
+        # raise Http404()
 
 
 # Driver create a passenger review
@@ -535,7 +550,9 @@ def driver_near_me(request, passenger_id):
             return redirect(passenger_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_passenger)
+
+        # raise Http404()
 
 
 # Driver begins a new journey
@@ -584,7 +601,9 @@ def new_journey(request, driver_profile_id):
             return redirect(driver_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_driver)
+
+        # raise Http404()
 
 
 # Display list of journeys the current driver has
@@ -613,7 +632,9 @@ def current_journey(request,driver_id):
             return redirect(driver_login)
 
     except ObjectDoesNotExist:
-        raise Http404()
+        return redirect(new_driver)
+
+        # raise Http404()
 
 # Display selected driver near me option
 def see_ride(request, passenger_id, travel_plan_id):
@@ -653,8 +674,9 @@ def see_ride(request, passenger_id, travel_plan_id):
             return redirect(passenger_login)
 
     except ObjectDoesNotExist:
+        return redirect(new_passenger)
 
-        raise Http404()
+        # raise Http404()
 
 # Book a seat in a car
 def book_seat(request, passenger_id, travel_plan_id):
