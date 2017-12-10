@@ -42,18 +42,30 @@ def new_driver(request):
 
             for existing_driver in drivers:
 
-                if new_driver.phone_number == existing_driver.phone_number:
+                if int(new_driver.phone_number) != int(existing_driver.phone_number):
+                    # print('Not equal')
+                    continue
+
+                elif int(new_driver.phone_number) == int(existing_driver.phone_number):
+
                     message = 'The number is already registered'
 
                     messages.error(request, ('This number is already registered'))
 
                     return render(request, 'registration/driver/registration_form.html', {"title":title, "form":form, "message":message})
+                    
+                    # print('<><><><><><>')
+                    # print(int(new_driver.phone_number))
+                    
+                    # print(int(existing_driver.phone_number))
+                    # print('<><><><><><>')
+                    # print('equal')
+                    break
 
-                else:
-                    new_driver.save()
+            new_driver.save()
 
-                    return redirect(driver, new_driver.id)
-                
+            return redirect(driver, new_driver.id) 
+                         
         else:
 
             messages.error(request, ('Please correct the error below.'))
@@ -213,17 +225,21 @@ def new_passenger(request):
 
             for existing_passenger in passengers:
 
-                if new_passenger.phone_number == existing_passenger.phone_number:
+                if int(new_passenger.phone_number) != int(existing_passenger.phone_number):
+                    continue
+
+                elif int(new_passenger.phone_number) == int(existing_passenger.phone_number):
                     message = 'The number is already registered'
 
                     messages.error(request, ('This number is already registered'))
 
                     return render(request, 'registration/passenger/registration_form.html', {"title":title, "form":form, "message":message})
 
-                else:
-                    new_passenger.save()
+                    break
 
-                    return redirect(passenger, new_passenger.id)
+            new_passenger.save()
+
+            return redirect(passenger, new_passenger.id)
 
         else:
 
