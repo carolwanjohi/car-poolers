@@ -77,9 +77,7 @@ DATABASES = {
 
 ## Known Bugs
 
-* booking car space feature is missing
 * viewing pick up points feature missing
-* setting current location and destination feature is missing
 
 ## Technologies Used
 - Python 3.6.2
