@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pooler',
-        'USER': ,
-        'PASSWORD': 
+        'USER': config('USER'),
+        'PASSWORD': config('PASSWORD'),
     }
 }
 
