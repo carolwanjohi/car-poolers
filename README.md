@@ -60,7 +60,7 @@ PASSWORD=<your postgresql password>
 * Create Postgres Database
 ```
 psql
-CREATE DATABASE pooler
+CREATE DATABASE pooler;
 ```
 ### Running the application
 ```
