@@ -45,7 +45,7 @@ As a driver I would to:
 
 ### Installation Process
 ```
-git clone https://github.com/carolwanjohi/car-poolers.git && cd cd rant-on
+git clone https://github.com/carolwanjohi/car-poolers.git && cd cd car-poolers
 virtualenv virtual or python3.6 -m venv virtual
 source virtual/bin/activate
 pip3 install -r requirements.txt
